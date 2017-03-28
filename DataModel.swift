@@ -8,6 +8,11 @@
 
 import Foundation
 
+typealias MedicalRequest = (
+    status: Int?,
+    requestType: String?,
+    reason: String?)
+
 typealias Phone = (
     id: Int64?,
     countryCode: Int64?,

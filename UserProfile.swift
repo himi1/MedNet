@@ -10,22 +10,57 @@ import Foundation
 
 class UserProfile {
     static let sharedInstance = UserProfile()
+
+    var phoneNo: Phone?
+    var firstName: String? = "Himi"
+    var lastName: String?
     
     var dateOfBirth: Date?
     var bloodType: String?
     var allergies: [String?]
     var treatments: [String?]
     var certificates: [String?]
-    var medicalRequests: [(status: Int, requestType: String, reason: String)]
+    var medicalRequests: [MedicalRequest]
     
     
-    fileprivate init() {
+    init() {
+        firstName = ""
+        lastName = ""
+        phoneNo = nil
         dateOfBirth = nil
         bloodType = nil
         allergies = []
         treatments = []
         certificates = []
         medicalRequests = []
+    }
+    
+    func addANewUser(firstName: String?, lastName: String?, phoneNo: Phone,
+                     dateOfBirth: Date?, bloodType: String?, allergies: [String?],
+                     treatments: [String?], certificates: [String?], medicalRequests: [MedicalRequest]) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.phoneNo = phoneNo
+        self.dateOfBirth = dateOfBirth
+        self.bloodType = bloodType
+        self.allergies = allergies
+        self.treatments = treatments
+        self.certificates = certificates
+        self.medicalRequests = medicalRequests
+    }
+    
+    init(firstName: String?, lastName: String?, phoneNo: Phone,
+         dateOfBirth: Date?, bloodType: String?, allergies: [String?],
+         treatments: [String?], certificates: [String?], medicalRequests: [MedicalRequest]) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.phoneNo = phoneNo
+        self.dateOfBirth = dateOfBirth
+        self.bloodType = bloodType
+        self.allergies = allergies
+        self.treatments = treatments
+        self.certificates = certificates
+        self.medicalRequests = medicalRequests
     }
     
     //getters
@@ -49,7 +84,7 @@ class UserProfile {
         return certificates as! [String]
     }
     
-    func getMedicalRequests() -> [(status: Int, requestType: String, reason: String)] {
+    func getMedicalRequests() -> [MedicalRequest] {
         return medicalRequests
     }
     

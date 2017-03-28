@@ -51,6 +51,19 @@ class MasterViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Try to find next responder
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+        }
+        // Do not add a line break
+        return false
+    }
+    
     //Enables auto search from a list of Strings
     func setSearching(textField: SearchTextField, list: [String]) {
         // Set the array of strings to suggest
@@ -67,11 +80,30 @@ class MasterViewController: UIViewController {
         performSegue(withIdentifier: segue, sender: self)
     }
     
-    /*func backToPreviousPage(){
-     dismiss(animated: true, completion: nill)
-     //dismiss(animated: true, completion: nil)
-     }*/
+    func transition(vc: UIViewController) {
+        let window = UIApplication.shared.windows[0] as UIWindow
+        UIView.transition(
+            from: window.rootViewController!.view,
+            to: vc.view,
+            duration: 0.4,//0.4,
+            options: .transitionCrossDissolve,
+            completion: {
+                finished in window.rootViewController = vc
+        })
+    }
     
+    
+    func navigateToLoginInPage() {
+        let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! LoginViewController
+        transition(vc: loginVC)
+    }
+
+    
+    func navigateToHomePage() {
+        let homePage = self.storyboard?.instantiateViewController(withIdentifier: "HomePage") as! UITabBarController
+        transition(vc: homePage)
+        //self.navigationController?.pushViewController(mapViewControllerObj!, animated: true)
+    }
 }
 
 extension UIViewController {
@@ -92,3 +124,4 @@ extension UIViewController {
         }
     }
 }
+

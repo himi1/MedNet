@@ -24,23 +24,21 @@ class AddProfileViewController: MasterViewController, UITextFieldDelegate, UIPic
 
         // Do any additional setup after loading the view.
         errorText.isHidden = true
+        self.navigationItem.setHidesBackButton(true, animated:true);
         
         //To hide keyboard on dateOfBirthTextField
         dateOfBirthTextField.inputView = UIView()
         
         configureBloodTypePicker()
-        /*
-        let searchList = ["AB+",
-                          "AB-",
-                          "A+",
-                          "A-",
-                          "B+",
-                          "B-",
-                          "O+",
-                          "O-"]
-        setSearching(textField: bloodTypeTextField, list: searchList)
- */
+        setSearching(textField: bloodTypeTextField, list: bloodTypeList)
+ 
     }
+    
+    override func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        return true
+    }
+
     
     func configureBloodTypePicker() {
         self.bloodTypePicker = UIPickerView(frame: CGRect(x: 0, y: 40,

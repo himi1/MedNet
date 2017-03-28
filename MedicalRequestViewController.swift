@@ -66,7 +66,7 @@ class MedicalRequestViewController: MasterViewController, UITableViewDelegate, U
             cell = TDBadgedCell(style: .default, reuseIdentifier: cellIdentifier);
         }
         
-        let (badgeColor, badgeString) = getBadgeConfigurations(status: medicalRequest.status)
+        let (badgeColor, badgeString) = getBadgeConfigurations(status: medicalRequest.status!)
         cell?.badgeString = badgeString
         cell?.badgeColor = badgeColor
         //cell?.badgeColorHighlighted = .green
@@ -75,7 +75,7 @@ class MedicalRequestViewController: MasterViewController, UITableViewDelegate, U
         cell?.badgeRadius = 20
         
         cell?.textLabel?.text = medicalRequest.reason
-        cell?.detailTextLabel?.text = "Request type: " + medicalRequest.requestType
+        cell?.detailTextLabel?.text = "Request type: " + medicalRequest.requestType!
         
         // Returning the cell
         return cell!
@@ -114,7 +114,7 @@ class MedicalRequestViewController: MasterViewController, UITableViewDelegate, U
         
         let editAction = UITableViewRowAction(style: .normal, title: "Edit") {action in
             //handle edit
-            self.editRequestString = UserProfile.sharedInstance.medicalRequests[indexPath.row].reason
+            self.editRequestString = UserProfile.sharedInstance.medicalRequests[indexPath.row].reason!
             
             UserProfile.sharedInstance.medicalRequests.remove(at: indexPath.row)
             
