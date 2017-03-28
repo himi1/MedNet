@@ -1,10 +1,11 @@
 //
 //  DataHelper.swift
-//  TestSqliteSwiftV2
+//  MedNet
 //
-//  Created by Jon Hoffman on 7/28/15.
-//  Copyright © 2015 Jon Hoffman. All rights reserved.
+//  Created by Himanshi Bhardwaj on 3/25/17.
+//  Copyright © 2017 HPP. All rights reserved.
 //
+
 
 import Foundation
 import SQLite
