@@ -208,7 +208,7 @@ open class SearchTextField: UITextField {
     // Re-set frames and theme colors
     fileprivate func redrawSearchTableView() {
         if inlineMode {
-            tableView?.isHidden = true
+            tableView?.isHidden = false//making changes here: true
             return
         }
         

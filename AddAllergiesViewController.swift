@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SearchTextField
 
 class AddAllergiesViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var AllergiesTableView: UITableView!

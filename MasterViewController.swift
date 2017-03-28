@@ -8,7 +8,6 @@
 
 import UIKit
 import SQLite
-import SearchTextField
 
 class MasterViewController: UIViewController {
     let bloodTypeList = ["AB+", "AB-", "A+", "A-", "B+", "B-", "O+", "O-"]
@@ -68,8 +67,9 @@ class MasterViewController: UIViewController {
     func setSearching(textField: SearchTextField, list: [String]) {
         // Set the array of strings to suggest
         textField.filterStrings(list)
-        // Then set the inline mode in true
-        textField.inlineMode = true
+        //textField.filterStrings(list)
+        // Then set the inline mode in true/false
+        //textField.inlineMode = true
         // Set a visual theme (SearchTextFieldTheme)
         textField.theme = SearchTextFieldTheme.darkTheme()
         // Set specific comparision options - Default: .caseInsensitive

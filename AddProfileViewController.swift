@@ -34,10 +34,10 @@ class AddProfileViewController: MasterViewController, UITextFieldDelegate, UIPic
  
     }
     
-    override func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    /*override func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         return true
-    }
+    }*/
 
     
     func configureBloodTypePicker() {
