@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SearchTextField
+//import SearchTextField
 
 
 class AddTreatmentsViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {

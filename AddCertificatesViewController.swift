@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SearchTextField
+//import SearchTextField
 
 
 class AddCertificatesViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {

@@ -10,6 +10,7 @@ import UIKit
 import SQLite
 
 class MasterViewController: UIViewController {
+    let userTypeList = ["Civilian", "Doctor", "Volunteer organization", "Hospital"]
     let bloodTypeList = ["AB+", "AB-", "A+", "A-", "B+", "B-", "O+", "O-"]
     let treatmentSuggestionList = ["Sinus treatment", "Skin treatment",
                                    "Teeth treatment"]
@@ -36,14 +37,17 @@ class MasterViewController: UIViewController {
                                      "Medical certificate",
                                      "Teeth certificate"]
     
+    let mainDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+ 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         //To hide keyboard when Tapped around
         hideKeyboardWhenTappedAround()
-    }
-    
+           }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -76,6 +80,24 @@ class MasterViewController: UIViewController {
         textField.comparisonOptions = [.caseInsensitive]
     }
     
+    
+    func configureDropDownTextField(textField: IQDropDownTextField, list: [String]) {
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.sizeToFit()
+        let buttonflexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let buttonDone = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.doneClicked))
+        toolbar.items = [buttonflexible, buttonDone]
+        textField.inputAccessoryView = toolbar
+        textField.isOptionalDropDown = true
+        textField.itemList = list
+    }
+    
+    func doneClicked() {
+        dismissKeyboard()
+    }
+
+    
     func navigate(segue: String) {
         performSegue(withIdentifier: segue, sender: self)
     }
@@ -92,12 +114,10 @@ class MasterViewController: UIViewController {
         })
     }
     
-    
     func navigateToLoginInPage() {
-        let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! LoginViewController
+        let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "Login") as! UINavigationController
         transition(vc: loginVC)
     }
-
     
     func navigateToHomePage() {
         let homePage = self.storyboard?.instantiateViewController(withIdentifier: "HomePage") as! UITabBarController
@@ -124,4 +144,3 @@ extension UIViewController {
         }
     }
 }
-

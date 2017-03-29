@@ -12,6 +12,46 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    //db 
+    var dbFilePath: NSString = NSString()
+    
+    
+    // MARK: - FMDB
+    
+    let DATABASE_RESOURCE_NAME = "MedNetDatabase"
+    let DATABASE_RESOURCE_TYPE = "sqlite"
+    let DATABASE_FILE_NAME = "MedNetDatabase.sqlite"
+    
+    func initializeDb() -> Bool {
+        let documentFolderPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        
+        let dbfile = "/" + DATABASE_FILE_NAME;
+        
+        self.dbFilePath = ((documentFolderPath as NSString) as String) + dbfile as NSString
+        
+        /*
+        let filemanager = FileManager.default
+        if (!filemanager.fileExists(atPath: dbFilePath as String) ) {
+            
+            let backupDbPath = Bundle.main.path(forResource: DATABASE_RESOURCE_NAME, ofType: DATABASE_RESOURCE_TYPE)
+            
+            if (backupDbPath == nil) {
+                return false
+            } else {
+                let error: NSError?
+                let copySuccessful = filemanager.copyItem(atPath: backupDbPath!, toPath:dbFilePath as String)
+                if !copySuccessful {
+                    print("copy failed: \(error?.localizedDescription)")
+                    return false
+                }
+                
+            }
+            
+        } */
+        return true
+        
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -34,6 +74,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navbarFont, NSForegroundColorAttributeName:UIColor.whiteColor()]
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
         
+        
+        //initializing db
+        if self.initializeDb() {
+            NSLog("Successful db copy")
+        }
         
         return true
     }

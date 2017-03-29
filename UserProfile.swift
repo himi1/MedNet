@@ -11,17 +11,34 @@ import Foundation
 class UserProfile {
     static let sharedInstance = UserProfile()
 
-    var phoneNo: Phone?
-    var firstName: String? = "Himi"
-    var lastName: String?
+    //var phoneNo: Phone?
+    //var firstName: String? = "Himi"
+    //var lastName: String?
     
+    //var dateOfBirth: Date?
+    //var bloodType: String?
+    //var allergies: [String?]
+    //var treatments: [String?]
+    //var certificates: [String?]
+    //var medicalRequests: [MedicalRequest]
+    var approvedStatus: String?
+    var userId: String?
+    var userName: String?
+    var firstName: String?
+    var lastName: String?
+    var phoneNo: Int64?
+    var placedMedicalRequests : [MedicalRequest?]
+    var incomingMedicalRequests: [MedicalRequest?]
+    var hospitalAppointments: [HospitalAppointment?]
+    var fundDonations: [FundDonation?]
+    var organDonations: [OrganDonation?]
+    var approval: Status?
+    var bloodType: BloodType?
     var dateOfBirth: Date?
-    var bloodType: String?
-    var allergies: [String?]
+    var interests: [String?]
     var treatments: [String?]
     var certificates: [String?]
-    var medicalRequests: [MedicalRequest]
-    
+    var allergies: [String?]
     
     init() {
         firstName = ""
@@ -32,11 +49,12 @@ class UserProfile {
         allergies = []
         treatments = []
         certificates = []
-        medicalRequests = []
+        placedMedicalRequests = []
+        incomingMedicalRequests = []
     }
     
-    func addANewUser(firstName: String?, lastName: String?, phoneNo: Phone,
-                     dateOfBirth: Date?, bloodType: String?, allergies: [String?],
+    func addANewUser(firstName: String?, lastName: String?, phoneNo: Int64?,
+                     dateOfBirth: Date?, bloodType: BloodType?, allergies: [String?],
                      treatments: [String?], certificates: [String?], medicalRequests: [MedicalRequest]) {
         self.firstName = firstName
         self.lastName = lastName
@@ -47,6 +65,8 @@ class UserProfile {
         self.treatments = treatments
         self.certificates = certificates
         self.medicalRequests = medicalRequests
+        self.approvedStatus = "Pending"
+        
     }
     
     init(firstName: String?, lastName: String?, phoneNo: Phone,
@@ -68,7 +88,7 @@ class UserProfile {
         return dateOfBirth!
     }
     
-    func getBloodType() -> String {
+    func getBloodType() -> BloodType {
         return bloodType!
     }
     
@@ -94,7 +114,7 @@ class UserProfile {
         self.dateOfBirth = dateOfBirth
     }
     
-    func setBloodType(bloodType: String) {
+    func setBloodType(bloodType: BloodType) {
         self.bloodType = bloodType
     }
     
@@ -111,7 +131,7 @@ class UserProfile {
     }
     
     func addMedicalRequest(status: Int, requestType: String, reason: String) {
-        self.medicalRequests.append((status, requestType, reason))
+        self.medicalRequests.append(append((status, requestType, reason))
         
     }
 }
