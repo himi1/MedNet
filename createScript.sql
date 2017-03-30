@@ -423,7 +423,7 @@ create table Profile (
 			on update cascade
 			on delete no action,
 	foreign key (userId)
-		references MedNetUser(id)
+		references Registered(id)
 			on update cascade
 			on delete no action
 );
@@ -509,7 +509,7 @@ create table HospitalAppointment (
 	apptDate date not null,
 	reason varchar(200) not null,
 	foreign key(bookedBy)
-		references Registed(id)
+		references Registered(id)
 			on update cascade
 			on delete cascade
 	foreign key(hospital)

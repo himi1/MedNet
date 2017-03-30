@@ -6,10 +6,9 @@
 //  Copyright © 2017 HPP. All rights reserved.
 //
 
-//All classes
-
 import Foundation
 
+//Enumerations
 enum Status: String {
     case Canceled = "Canceled"
     case Pending = "Pending"
@@ -22,14 +21,19 @@ enum RequestType: String {
     case System = "System"
 }
 
-
 enum CUIDType: String {
     case StateId = "StateId"
     case Passport = "Passport"
     case DrivingLicence = "DrivingLicence"
 }
 
-//BloodType
+enum UserType: String {
+    case Civilian = "Civilian"
+    case Doctor = "Doctor"
+    case Hospital = "Hospital"
+    case VolunteerOrganization = "VolunteerOrganization"
+}
+
 enum BloodType: String {
     case AP = "A+"
     case AN = "A-"
@@ -41,159 +45,7 @@ enum BloodType: String {
     case BN = "B-"
 }
 
-//Profile
-class Profile {
-    //var id: Int64
-    var approval: Status?
-    var bloodType: BloodType?
-    var dateOfBirth: Date?
-    var interests: [String?] = []
-    var treatments: [String?] = []
-    var certificates: [String?] = []
-    var allergies: [String?] = []
-}
-
-
-
-
-
-//////////////////////////////////////////////////////////
-/*
-//to be fixed, why would government have a name?
-class Government {
-    var userId: Int64?
-    var firstName: String?
-    var middleName: String?
-    var lastName: String?
-    var phoneNo: Int?
-    var email: Array<String> = Array()
-    
-    init (userId: Int64) {
-        self.userId = userId
-    }
-}
-
-class HealthAccrediationAuthority {
-    var userId: Int64?
-    var firstName: String?
-    var middleName: String?
-    var lastName: String?
-    var phone: Int64?
-    var email: Array<String> = Array()
-    var authorizedBy: Government?
-    
-    init (userId: Int64) {
-        self.userId = userId
-    }
-}
-
-//RegisteredMedNetUser
-class RegisteredMedNetUser {
-    var userId: String?
-    var userName: String?
-    var phoneNo: Int64?
-    var userType: UserType?
-    var placedMedicalRequests : [MedicalRequest]
-    var incomingMedicalRequests: [MedicalRequest]
-    var hospitalAppointments: [HospitalAppointment]
-    var fundDonations: [FundDonation]
-    var organDonations: [OrganDonation]
-    var approval: Status?
-    
-    init (userId: String?) {
-        self.userId = userId
-    }
-}
-
-enum UserType: String {
-    case Civilian = "Civilian"
-    case Doctor = "Doctor"
-    case Hospital = "Hospital"
-    case VolunteerOrganization = "VolunteerOrganization"
-}
-
-//Used JOINED strategy
-//Types of RegisteredMedNetUser:
-// Civilian
-class Civilian {
-    
-    var userId: String?
-    var firstName: String?
-    var lastName: String?
-    var bloodType: BloodType?
-    var dateOfBirth: Date?
-    var interests: [String?] = []
-    var treatments: [String?] = []
-    var certificates: [String?] = []
-    var allergies: [String?] = []
-}
-//Hospital
-class Hospital {
-    var userId: String?
-    var name: String?
-    var location: String?
-    var treatments: [String?] = []
-    var hospitalServices: [String?] = []
-    var specialServices: [SpecialServices?] = []
-}
-//Doctor
-class Doctor {
-    var userId: String?
-    var firstName: String?
-    var lastName: String?
-    var bloodType: BloodType?
-    var dateOfBirth: Date?
-    var interests: [String?] = []
-    var treatments: [String?] = []
-    var certificates: [String?] = []
-    var specializations: [String?] = []
-    var degrees: [String?] = []
-    var hospitals: [Hospital?] = []
-    var specialServices: [SpecialServices?] = []
-}
-//VolunteerOrganization
-//to add something more in this
-class VolunteerOrganization {
-    var userId: String?
-}
-
-//enumerations
-
-//ServiceTypes
-class SpecialServices {
-    var name: String?
-    var authorizedBy: HealthAccrediationAuthority
-    var authId: String?
-    var validTo: Date?
-    
-    init(authId: String){
-        self.authId = authId
-    }
-}
-
-//Request types:
-class FundDonation {
-    var fundLimit: Int64?
-    var authorizedBy: HealthAccrediationAuthority?
-    var authId: String?
-    var validTo: Date?
-    
-    init(authId: String){
-        self.authId = authId
-    }
-}
-
-class HospitalAppointment {
-    var hospital: Hospital?
-    var date: Date?
-    var reason: String?
-    
-    init (hospital: Hospital, date: Date, reason: String) {
-        self.hospital = hospital
-        self.date = date
-        self.reason = reason
-    }
-}
+//All classes
 class MedicalRequest {
     var requestId: Int64?
     var reason: String?
@@ -208,11 +60,91 @@ class MedicalRequest {
     }
 }
 
-class OrganDonation {
-    var name: String?
-    var authorizedBy: HealthAccrediationAuthority?
+class MedNetUser {
+	var id: Int64?
+	var name: String?
+	var emailId: String?
+	var phone: String?
+	var sentRequests: Array<MedicalRequest> = Array()
+	var receivedRequests: Array<MedicalRequest> = Array()
+}
+
+class RegisteredMedNetUser: MedNetUser {
+	var userName: String?
+	var profile: Profile?
+	var hospitalAppointments: Array<HospitalAppointment> = Array()
+	var services: Array<MedicalService> = Array()
+}
+
+class UnRegisteredMedNetUser: MedNetUser {
+	
+}
+
+class Government: UnRegisteredMedNetUser {
+ 
+}
+
+class HealthAccrediationAuthority: UnRegisteredMedNetUser {
+    var authorizedBy: Government?
+}
+
+class Other: UnRegisteredMedNetUser {
+    var connectedTo: Array<RegisteredMedNetUser> = Array()
+}
+
+class Profile {
+    var approval: Status?
+    var bloodType: BloodType?
+    var dateOfBirth: Date?
+    var interests: [String?] = []
+    var treatments: [String?] = []
+    var certificates: [String?] = []
+    var allergies: [String?] = []
+}
+
+class Civilian : RegisteredMedNetUser {
+    var cUID: String?
+	var CUIDType: CUIDType?
+}
+
+class Hospital : RegisteredMedNetUser {
+    var hospitalServices: [String?] = []
+}
+
+class Doctor : RegisteredMedNetUser {
+    var specializations: [String?] = []
+    var degrees: [String?] = []
+    var hospitals: [Hospital?] = []
+}
+
+class VolunteerOrganization: RegisteredMedNetUser {
+
+}
+
+class MedicalService {
+	var authorizedBy: HealthAccrediationAuthority?
     var authId: String?
     var validTo: Date?
 }
 
-*/
+class Donation: MedicalService {
+
+}
+
+class SpecialService : MedicalService {
+    var name: String?
+}
+
+class FundDonation: Donation {
+    var fundLimit: Int64?
+}
+
+class OrganDonation : Donation {
+    var name: String?
+}
+
+class HospitalAppointment {
+    var hospital: Hospital?
+    var date: Date?
+    var reason: String?
+}
