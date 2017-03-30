@@ -10,6 +10,55 @@
 
 import Foundation
 
+enum Status: String {
+    case Canceled = "Canceled"
+    case Pending = "Pending"
+    case Completed = "Completed"
+    case Denied = "Denied"
+}
+
+enum RequestType: String {
+    case Manual = "Manual"
+    case System = "System"
+}
+
+
+enum CUIDType: String {
+    case StateId = "StateId"
+    case Passport = "Passport"
+    case DrivingLicence = "DrivingLicence"
+}
+
+//BloodType
+enum BloodType: String {
+    case AP = "A+"
+    case AN = "A-"
+    case ABP = "AB+"
+    case ABN = "AB-"
+    case OP = "O+"
+    case ON = "O-"
+    case BP = "B+"
+    case BN = "B-"
+}
+
+//Profile
+class Profile {
+    //var id: Int64
+    var approval: Status?
+    var bloodType: BloodType?
+    var dateOfBirth: Date?
+    var interests: [String?] = []
+    var treatments: [String?] = []
+    var certificates: [String?] = []
+    var allergies: [String?] = []
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////
+/*
 //to be fixed, why would government have a name?
 class Government {
     var userId: Int64?
@@ -67,6 +116,7 @@ enum UserType: String {
 //Types of RegisteredMedNetUser:
 // Civilian
 class Civilian {
+    
     var userId: String?
     var firstName: String?
     var lastName: String?
@@ -108,26 +158,6 @@ class VolunteerOrganization {
 }
 
 //enumerations
-enum BloodType: String {
-    case AP = "A+"
-    case AN = "A-"
-    case ABP = "AB+"
-    case ABN = "AB-"
-    case OP = "O+"
-    case ON = "O-"
-    case BP = "B+"
-    case BN = "B-"
-}
-enum RequestType: String {
-    case Manual = "Manual"
-    case System = "System"
-}
-enum Status: String {
-    case Canceled = "Canceled"
-    case Pending = "Pending"
-    case Completed = "Completed"
-    case Denied = "Denied"
-}
 
 //ServiceTypes
 class SpecialServices {
@@ -170,10 +200,10 @@ class MedicalRequest {
     var requestType: RequestType?
     var status: Status?
     
-    init (requestId: Int64, reason: String, rType: RequestType, status: Status) {
+    init (requestId: Int64, reason: String, requestType: RequestType, status: Status) {
         self.requestId = requestId
         self.reason = reason
-        self.requestType = rType
+        self.requestType = requestType
         self.status = status
     }
 }
@@ -185,4 +215,4 @@ class OrganDonation {
     var validTo: Date?
 }
 
-
+*/

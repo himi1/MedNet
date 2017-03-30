@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class OrganizationMedicalRequestViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var medicalRequestView: UIView!

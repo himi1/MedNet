@@ -27,20 +27,20 @@ class UserProfile {
     var firstName: String?
     var lastName: String?
     var phoneNo: Int64?
-    var placedMedicalRequests : [MedicalRequest?]
-    var incomingMedicalRequests: [MedicalRequest?]
-    var hospitalAppointments: [HospitalAppointment?]
-    var fundDonations: [FundDonation?]
-    var organDonations: [OrganDonation?]
+    var placedMedicalRequests : [MedicalRequest?] = []
+    var incomingMedicalRequests: [MedicalRequest?] = []
+    var hospitalAppointments: [HospitalAppointment?] = []
+    var fundDonations: [FundDonation?] = []
+    var organDonations: [OrganDonation?] = []
     var approval: Status?
     var bloodType: BloodType?
     var dateOfBirth: Date?
-    var interests: [String?]
-    var treatments: [String?]
-    var certificates: [String?]
-    var allergies: [String?]
+    var interests: [String?] = []
+    var treatments: [String?] = []
+    var certificates: [String?] = []
+    var allergies: [String?] = []
     
-    init() {
+    /*init() {
         firstName = ""
         lastName = ""
         phoneNo = nil
@@ -51,7 +51,7 @@ class UserProfile {
         certificates = []
         placedMedicalRequests = []
         incomingMedicalRequests = []
-    }
+    }*/
     
     func addANewUser(firstName: String?, lastName: String?, phoneNo: Int64?,
                      dateOfBirth: Date?, bloodType: BloodType?, allergies: [String?],
@@ -64,13 +64,13 @@ class UserProfile {
         self.allergies = allergies
         self.treatments = treatments
         self.certificates = certificates
-        self.medicalRequests = medicalRequests
+        self.placedMedicalRequests = medicalRequests
         self.approvedStatus = "Pending"
         
     }
     
-    init(firstName: String?, lastName: String?, phoneNo: Phone,
-         dateOfBirth: Date?, bloodType: String?, allergies: [String?],
+    /*init(firstName: String?, lastName: String?, phoneNo: Int64?,
+         dateOfBirth: Date?, bloodType: BloodType?, allergies: [String?],
          treatments: [String?], certificates: [String?], medicalRequests: [MedicalRequest]) {
         self.firstName = firstName
         self.lastName = lastName
@@ -80,8 +80,9 @@ class UserProfile {
         self.allergies = allergies
         self.treatments = treatments
         self.certificates = certificates
-        self.medicalRequests = medicalRequests
-    }
+        self.placedMedicalRequests = medicalRequests
+        self.approvedStatus = "Pending"
+    }*/
     
     //getters
     func getDateOfBirth() -> Date {
@@ -105,7 +106,7 @@ class UserProfile {
     }
     
     func getMedicalRequests() -> [MedicalRequest] {
-        return medicalRequests
+        return placedMedicalRequests as! [MedicalRequest]
     }
     
 
@@ -130,8 +131,10 @@ class UserProfile {
         self.certificates = certificates
     }
     
-    func addMedicalRequest(status: Int, requestType: String, reason: String) {
-        self.medicalRequests.append(append((status, requestType, reason))
-        
+    func addMedicalRequest(status: String, requestType: String, reason: String) {
+        let r = RequestType(rawValue: requestType)!
+        let s = Status(rawValue: status)!
+        self.placedMedicalRequests.append(MedicalRequest(requestId: 1, reason: reason, requestType: r, status: s))
     }
+    
 }
