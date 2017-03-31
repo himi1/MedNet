@@ -48,7 +48,7 @@ class RegisteredUserViewController: MasterViewController {
         //TODO: remove dummy user
         //create a dummy User
         UserProfile()
-        UserProfile.sharedInstance.addANewUser(firstName: "Himanshi", lastName: "Bhardwaj", phoneNo: Phone(id: 1, countryCode: 1, areaCode: 617, phoneNo: 5169439), dateOfBirth: Date(), bloodType: "O+", allergies: ["Egg allergy", "Dummy allergy1", "Dummy allergy2"], treatments: ["dummy treatment", "dummy treatment2", "dummy treatment3"], certificates: ["dummy certificates", "dummy certificate1", "dummy certificate2"], medicalRequests: [MedicalRequest(status: 2,requestType: "Manual", reason: "Dummy reason1"), MedicalRequest(status: 1,requestType: "System", reason: "Approve user"), MedicalRequest(status: 3,requestType: "Manual", reason: "Dummy reason2")])
+        /*UserProfile.sharedInstance.addANewUser(firstName: "Himanshi", lastName: "Bhardwaj", phoneNo: Phone(id: 1, countryCode: 1, areaCode: 617, phoneNo: 5169439), dateOfBirth: Date(), bloodType: "O+", allergies: ["Egg allergy", "Dummy allergy1", "Dummy allergy2"], treatments: ["dummy treatment", "dummy treatment2", "dummy treatment3"], certificates: ["dummy certificates", "dummy certificate1", "dummy certificate2"], medicalRequests: [MedicalRequest(status: 2,requestType: "Manual", reason: "Dummy reason1"), MedicalRequest(status: 1,requestType: "System", reason: "Approve user"), MedicalRequest(status: 3,requestType: "Manual", reason: "Dummy reason2")])*/
         
         
         //if it reaches here, means validation successful

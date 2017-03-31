@@ -9,7 +9,7 @@
 
 import Foundation
 import SQLite
-
+/*
 
 protocol DataHelperProtocol {
     associatedtype T
@@ -415,3 +415,4 @@ class PlayerDataHelper: DataHelperProtocol {
     }
 }
 
+*/

@@ -37,7 +37,7 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
     }
     
     func showOrHideTableView() {
-        if (UserProfile.sharedInstance.medicalRequests.count == 0) {
+        if (UserProfile.sharedInstance.placedMedicalRequests.count == 0) {
             medicalRequestView.isHidden = true
         }
         else {
@@ -53,12 +53,12 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
     
     //MARK: - Table view functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return UserProfile.sharedInstance.medicalRequests.count
+        return UserProfile.sharedInstance.placedMedicalRequests.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Getting the right element
-        let medicalRequest = UserProfile.sharedInstance.medicalRequests[indexPath.row]
+        let medicalRequest = UserProfile.sharedInstance.placedMedicalRequests[indexPath.row]
         
         let cellIdentifier = "MedicalRequestCell"
         
@@ -67,7 +67,7 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
             cell = TDBadgedCell(style: .default, reuseIdentifier: cellIdentifier);
         }
         
-        let (badgeColor, badgeString) = getBadgeConfigurations(status: medicalRequest.status!)
+        let (badgeColor, badgeString) = getBadgeConfigurations(status: (medicalRequest?.status!)!)
         cell?.badgeString = badgeString
         cell?.badgeColor = badgeColor
         //cell?.badgeColorHighlighted = .green
@@ -75,8 +75,8 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
         cell?.badgeFontSize = 18
         cell?.badgeRadius = 20
         
-        cell?.textLabel?.text = medicalRequest.reason
-        cell?.detailTextLabel?.text = "Request type: " + medicalRequest.requestType!
+        cell?.textLabel?.text = medicalRequest?.reason
+        //cell?.detailTextLabel?.text = "Request type: " + medicalRequest?.requestType!.rawValue
         
         // Returning the cell
         return cell!
@@ -86,12 +86,13 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func getBadgeConfigurations(status: Int) -> (color: UIColor, string: String) {
-        switch(status) {
-        case 1: return (.green, "Approved")
-        case 2: return (.orange, "Pending")
-        case 3: return (.red, "Rejected")
-        default: return (.red, "Rejected")
+    func getBadgeConfigurations(status: Status) -> (color: UIColor, string: String) {
+        switch(status.rawValue) {
+        case "Canceled": return (.green, "Cancelled")
+        case "Pending": return (.orange, "Pending")
+        case "Completed": return (.orange, "Completed")
+        case "Denied": return (.orange, "Denied")
+        default: return (.red, "Denied")
         }
     }
     
@@ -105,7 +106,7 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") {action in
             //handle delete
-            UserProfile.sharedInstance.medicalRequests.remove(at: indexPath.row)
+            UserProfile.sharedInstance.placedMedicalRequests.remove(at: indexPath.row)
             
             //to reload the AllergiesTableView
             self.medicalRequestTableView.reloadData()
@@ -115,9 +116,9 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
         
         let editAction = UITableViewRowAction(style: .normal, title: "Approve") {action in
             //handle edit
-            self.editRequestString = UserProfile.sharedInstance.medicalRequests[indexPath.row].reason!
+            self.editRequestString = (UserProfile.sharedInstance.placedMedicalRequests[indexPath.row]?.reason!)!
             
-            UserProfile.sharedInstance.medicalRequests.remove(at: indexPath.row)
+            UserProfile.sharedInstance.placedMedicalRequests.remove(at: indexPath.row)
             
             //to reload the AllergiesTableView
             self.medicalRequestTableView.reloadData()

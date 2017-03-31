@@ -36,7 +36,7 @@ class AddRequestViewController: MasterViewController {
         
         if (validated) {
             //add data to UserProfile class
-            UserProfile.sharedInstance.addMedicalRequest(status: 2, requestType: "Manual", reason: requestTextField.text!)
+            UserProfile.sharedInstance.addMedicalRequest(status: "Pending", requestType: "Manual", reason: requestTextField.text!)
             
             //go to back page
             performSegueToReturnBack()

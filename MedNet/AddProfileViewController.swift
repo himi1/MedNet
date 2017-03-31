@@ -77,7 +77,7 @@ class AddProfileViewController: MasterViewController, UITextFieldDelegate, UIPic
         if (validated) {
             //add data to UserProfile class
             UserProfile.sharedInstance.setDateOfBirth(dateOfBirth: dateOfBirth!)
-            UserProfile.sharedInstance.setBloodType(bloodType: bloodType!)
+            UserProfile.sharedInstance.setBloodType(bloodType: BloodType(rawValue: bloodType!)!)
             
             //go to next page
             navigate(segue: "segueFromAddProfileToAddAllergiesViewController")

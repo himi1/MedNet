@@ -14,12 +14,12 @@ typealias Phone = (
     phoneNo: Int64?
 )
 
-typealias MedNetUser = (
+/*typealias MedNetUser = (
     id: Int64?,
     firstName: String?,
     lastName: String?,
     phoneNo: Int64?
-)
+)*/
 
 /****examples****/
 

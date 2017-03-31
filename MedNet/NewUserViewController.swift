@@ -77,7 +77,8 @@ class NewUserViewController: MasterViewController {
     
     @IBAction func registerButtonTapped(_ sender: UIBarButtonItem) {
         errorText.isHidden = true
-        do {
+        
+        /*do {
             let phoneId = try PhoneDataHelper.insert(
                 Phone(id: 0,
                       countryCode: Int64(countryCode.text!),
@@ -92,14 +93,14 @@ class NewUserViewController: MasterViewController {
                            phoneNo: Int64(phoneId)))
             
             print("added MedNet User", MedNetUserId)
-            
+            */
             performSegue(withIdentifier: "segueFromRegistrationToProfileAddViewController", sender: self)
             
-        } catch _{
+       /* } catch _{
             print("error in adding phone number")
             errorText.isHidden = false
             
-        }
+        }*/
         
     }
     

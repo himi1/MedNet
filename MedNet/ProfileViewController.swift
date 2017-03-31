@@ -29,9 +29,9 @@ class ProfileViewController: MasterViewController {
         super.viewDidLoad()
         nameTextField.text = UserProfile.sharedInstance.firstName! + " " + UserProfile.sharedInstance.lastName!
         let phoneNo = UserProfile.sharedInstance.phoneNo!
-        phoneNumberTextField.text = String(phoneNo.countryCode!) + "-" + String(phoneNo.areaCode!) + "-" + String(phoneNo.phoneNo!)
+        phoneNumberTextField.text = String(phoneNo)
         dateOfBirthTextField.text = Util().dateFormatter.string(from: UserProfile.sharedInstance.dateOfBirth!)
-        bloodTypeTextField.text = UserProfile.sharedInstance.bloodType
+        bloodTypeTextField.text = UserProfile.sharedInstance.bloodType?.rawValue
         
         //Allergies
         if (allergies.count == 0) {
