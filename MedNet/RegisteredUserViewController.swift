@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SQLite
 
 class RegisteredUserViewController: MasterViewController {
 
@@ -41,9 +42,30 @@ class RegisteredUserViewController: MasterViewController {
         }
     }
     
-    
+    var MedNetUserId: Int64?
     func validateUserInput() -> Bool {
+        var userFound = false
         //validate user from Database
+        do {
+            userFound = try findInRegisterTable(userName1: "lovecare")
+        }
+        catch {
+            print("failed")
+        }
+        
+        do {
+            if(userFound) {
+                try findInMedNetTable(MedNetUserId: MedNetUserId)
+            }
+            else {
+                errorText.text = "No such user found"
+            }
+        }
+        catch { print("failed")
+        }
+        
+        
+        
         
         //TODO: remove dummy user
         //create a dummy User
@@ -54,21 +76,56 @@ class RegisteredUserViewController: MasterViewController {
         //if it reaches here, means validation successful
         return true
     }
-
-        
-        
-    }
-    
-    
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    class MedNetUser {
+        var id: Int64?
+        var name: String?
+        var emailId: String?
+        var phone: String?
+        var sentRequests: Array<MedicalRequest> = Array()
+        var receivedRequests: Array<MedicalRequest> = Array()
     }
-    */
+    
+    class RegisteredMedNetUser: MedNetUser {
+        var userName: String?
+        var profile: Profile?
+        var hospitalAppointments: Array<HospitalAppointment> = Array()
+        var services: Array<MedicalService> = Array()
+    }
+*/
 
+    func findInRegisterTable(userName1: String) throws -> Bool { // -> { //RegisteredMedNetUser? {
+        let registered = Table("Registered")
+        let id = Expression<Int64>("id")
+        let userName = Expression<String>("userName")
+        guard let DB = SQLiteDataStore.sharedInstance.DB else {
+            throw DataAccessError.datastore_Connection_Error
+        }
+        let query = registered.select(id)
+            .filter(userName.like(userName1))
+        for user in try DB.prepare(query) {
+            MedNetUserId = user[id]
+        }
+        if MedNetUserId == nil {
+            errorText.text = "No such userName found"
+            return false
+        }
+        return true
+        
+    }
+    
+    func findInMedNetTable(MedNetUserId: Int64?) throws {
+        let registered = Table("MedNetUser")
+        let id = Expression<Int64>("id")
+        guard let DB = SQLiteDataStore.sharedInstance.DB else {
+            throw DataAccessError.datastore_Connection_Error
+        }
+        let query = registered.filter(MedNetUserId! == id)
+        for user in try DB.prepare(query) {
+            print(user)
+        }
+    }
+    
 
+}

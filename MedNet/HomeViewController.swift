@@ -15,7 +15,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        welcomeLabel.text = "Welcome, " + UserProfile.sharedInstance.firstName!
+        //welcomeLabel.text = "Welcome, " + UserProfile.sharedInstance.firstName!
     }
 
     override func didReceiveMemoryWarning() {
