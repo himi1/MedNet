@@ -367,11 +367,12 @@
                     <navigationItem key="navigationItem" title="Sign in" id="Dsb-Ko-CGT"/>
                     <connections>
                         <outlet property="errorText" destination="iWF-fp-rCU" id="df6-oQ-Fpd"/>
+                        <outlet property="userNameTextField" destination="DDe-2m-oI6" id="Yb7-gS-QRK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ruw-zE-Bqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-31137" y="-2884"/>
+            <point key="canvasLocation" x="-31230" y="-2957"/>
         </scene>
         <!--Profile Information-->
         <scene sceneID="yTK-xi-vWf">

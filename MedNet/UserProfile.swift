@@ -132,9 +132,9 @@ class UserProfile {
     }
     
     func addMedicalRequest(status: String, requestType: String, reason: String) {
-        let r = RequestType(rawValue: requestType)!
-        let s = Status(rawValue: status)!
-        self.placedMedicalRequests.append(MedicalRequest(requestId: 1, reason: reason, requestType: r, status: s))
+        //let r = RequestType(rawValue: requestType)!
+        //let s = Status(rawValue: status)!
+        self.placedMedicalRequests.append(MedicalRequest(requestId: 1, reason: reason, requestType: requestType, status: status))
     }
     
 }

@@ -23,7 +23,7 @@ class SQLiteDataStore {
     static let sharedInstance = SQLiteDataStore()
     let DB: Connection?
     
-    fileprivate init() {
+    /*fileprivate init() {
         
         let path = NSSearchPathForDirectoriesInDomains(
             .documentDirectory, .userDomainMask, true
@@ -37,9 +37,27 @@ class SQLiteDataStore {
             print("Failed to connect to DB.")
             DB = nil
         }
-    }
+    }*/
     
-    func createTables() throws{
+    public init() {
+        
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory, .userDomainMask, true
+            ).first!
+        
+        //print("db location:", dbPath)
+        let dbPath = "/Users/himanshibhardwaj/IdeaProjects/MedNet/MedNet/MedNet.db"
+        do {
+            DB = try Connection(dbPath) /*Users/Zion/Documents/TestSQLite/MedNet.db*/
+            print("done successfully")
+        } catch _ {
+            print("Failed to connect to DB.")
+            DB = nil
+        }
+    }
+
+    
+    /*func createTables() throws{
         do {
             //TODO
             print("create tables")
@@ -49,6 +67,38 @@ class SQLiteDataStore {
             throw DataAccessError.datastore_Connection_Error
         }
         
-    } 
+    }*/
+    
+    //ToDo: delete later on
+    public func createTables() throws
+    {
+        guard let DB = SQLiteDataStore.sharedInstance.DB else {
+            throw DataAccessError.datastore_Connection_Error
+        }
+        do
+        {
+            print("PD is mad")
+            //try DB.prepare("select of from Allergies")
+            //let stmt = DB.prepare("SELECT * FROM Civilian")
+            for row in try DB.run("SELECT * FROM Civilian")
+            {
+                print ("Read")
+                print(row)
+                // print("ID: \(row[0]), CUID: \(row[1]), CUIDType: \(row[2])")
+                // id: Optional(2), email: Optional("betty@icloud.com")
+                // id: Optional(3), email: Optional("cathy@icloud.com")
+            }
+            //DB.scalar("SELECT count(*) FROM users") // 2
+            
+            
+        }
+        catch
+        {
+            print("Abracadabra")
+            throw DataAccessError.datastore_Connection_Error
+        }
+        
+    }
+
 }
 

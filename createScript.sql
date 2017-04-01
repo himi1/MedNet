@@ -10,6 +10,16 @@ insert into Status(status) VALUES('Pending');
 insert into Status(status) VALUES('Denied');
 insert into Status(status) VALUES('Completed');
 
+	create table UserType (
+		id INTEGER primary key autoincrement,
+		userType varchar(50) not null
+	);
+
+	insert into UserType(userType) VALUES('Civilian');
+	insert into UserType(userType) VALUES('Doctor');
+	insert into UserType(userType) VALUES('VolunteerOrganization');
+	insert into UserType(userType) VALUES('Hospital');
+
 -- Enumeration Strategy: Enumeration Table
 create table RequestType (
 	id INTEGER primary key autoincrement,
@@ -65,7 +75,7 @@ insert into MedNetUser (name, emailId, phoneNo) Values ('LoveCare Organization',
 
 
 -- Table that holds medical requests requested by a registered user
-create table MedicalRequests (
+create table MedicalRequest (
 	id INTEGER primary key autoincrement,
 	status INTEGER not null,
 	requestType INTEGER not null,
@@ -86,14 +96,14 @@ create table MedicalRequests (
 	unique(requestType, reason, placedBy)
 );
 
-insert into MedicalRequests(status, requestType, reason, placedBy) Values(2, 1, 'B+ Blood Requirement', 1);
-insert into MedicalRequests(status, requestType, reason, placedBy) Values(2, 2, 'Profile Approval', 2);
-insert into MedicalRequests(status, requestType, reason, placedBy) Values(2, 1, 'Fund needed for cancer', 3);
+insert into  MedicalRequest(status, requestType, reason, placedBy) Values(2, 1, 'B+ Blood Requirement', 1);
+insert into  MedicalRequest(status, requestType, reason, placedBy) Values(2, 2, 'Profile Approval', 2);
+insert into  MedicalRequest(status, requestType, reason, placedBy) Values(2, 1, 'Fund needed for cancer', 3);
 
 -- Separate table to implement the scenario where one user can be
 -- requested for multiple medical services and one medical service
 -- can be requested to multiple users
-create table MedicalRequests_MedNetUser (
+create table  MedicalRequest_MedNetUser (
 	placedTo INTEGER not null,
 	have INTEGER not null,
 	foreign key (placedTo)
@@ -101,32 +111,37 @@ create table MedicalRequests_MedNetUser (
 			on update cascade
 			on delete cascade,
 	foreign key (have)
-		references MedicalRequests(id)
+		references  MedicalRequest(id)
 			on update cascade
 			on delete cascade,
 	primary key(placedTo, have)
 );
 
-insert into MedicalRequests_MedNetUser(placedTo, have) Values(4, 2);
-insert into MedicalRequests_MedNetUser(placedTo, have) Values(3, 1);
-insert into MedicalRequests_MedNetUser(placedTo, have) Values(4, 3);
+insert into  MedicalRequest_MedNetUser(placedTo, have) Values(4, 2);
+insert into  MedicalRequest_MedNetUser(placedTo, have) Values(3, 1);
+insert into  MedicalRequest_MedNetUser(placedTo, have) Values(4, 3);
 
 -- Hierarchy Strategy: Joined Strategy with User
 create table Registered (
 	id INTEGER primary key,
 	userName varchar(200) not null unique,
+	userType INTEGER not null,
+	foreign key(userType)
+		references userType(id)
+			on update cascade
+			on delete no action
 	foreign key(id)
 		references MedNetUser(id)
 			on update cascade
 			on delete cascade
 );
 
-insert into Registered(id, userName) Values (1, 'johnf');
-insert into Registered(id, userName) Values (2, 'deboire');
-insert into Registered(id, userName) Values (3, 'michaelr');
+insert into Registered(id, userName, userType) Values (1, 'johnf', 1);
+insert into Registered(id, userName, userType) Values (2, 'deboire', 1);
+insert into Registered(id, userName, userType) Values (3, 'michaelr', 2);
 
-insert into Registered(id, userName) Values (6, 'phoenix');
-insert into Registered(id, userName) Values (7, 'lovecare');
+insert into Registered(id, userName, userType) Values (6, 'phoenix', 4);
+insert into Registered(id, userName, userType) Values (7, 'lovecare', 3);
 
 -- Hierarchy Strategy: Joined Strategy with User
 create table UnRegistered (
@@ -344,12 +359,12 @@ create table MedicalService (
 	id INTEGER primary key,
 	userId INTEGER not null,
 	foreign key(userId)
-		references(Registered)
+		references Registered(id)
 			on update cascade
 			on delete no action
 );
 
-insert into MedicalService(id) Values (1, 3);
+insert into MedicalService(id, userId) Values (1, 3);
 
 -- Donation Service
 create table Donation (
@@ -444,66 +459,65 @@ insert into Profile(userId, approval) Values(7, 3);
 create table Interests (
 	partOf INTEGER not null,
 	name varchar(200) not null,
-	foreign key(of)
+	foreign key(partOf)
 		references Profile(id)
 			on update cascade
 			on delete cascade,
-	primary key(of, name)
+	primary key(partOf, name)
 );
 
-insert into Interests(of, name) Values (1, 'Anaemia');
-insert into Interests(of, name) Values (1, 'Cough');
-insert into Interests(of, name) Values (1, 'Typhoid');
+insert into Interests(partOf, name) Values (1, 'Anaemia');
+insert into Interests(partOf, name) Values (1, 'Cough');
+insert into Interests(partOf, name) Values (1, 'Typhoid');
 
-insert into Interests(of, name) Values (2, 'DNA Matching');
-insert into Interests(of, name) Values (2, 'Ebola');
+insert into Interests(partOf, name) Values (2, 'DNA Matching');
+insert into Interests(partOf, name) Values (2, 'Ebola');
 
-insert into Interests(of, name) Values (3, 'Cardic Arrest');
-insert into Interests(of, name) Values (3, 'Medicines');
+insert into Interests(partOf, name) Values (3, 'Cardic Arrest');
+insert into Interests(partOf, name) Values (3, 'Medicines');
 
 -- Treatments in profile of registered user
 create table Treatments (
 	partOf INTEGER not null,
 	name varchar(200) not null,
-	foreign key(of)
+	foreign key(partOf)
 		references Profile(id)
 			on update cascade
 			on delete cascade,
-	primary key(of, name)
+	primary key(partOf, name)
 );
 
-insert into Treatments(of, name) Values (1, 'Anaemia');
+insert into Treatments(partOf, name) Values (1, 'Anaemia');
 
 -- Certificates in profile of registered user
 create table Certificates (
 	partOf INTEGER not null,
 	name varchar(200) not null,
-	foreign key(of)
+	foreign key(partOf)
 		references Profile(id)
 			on update cascade
 			on delete cascade,
-	primary key(of, name)
+	primary key(partOf, name)
 );
 
-insert into Certificates(of, name) Values (1, 'Medical Certificate');
-insert into Certificates(of, name) Values (1, 'Blood Donation Certificate');
+insert into Certificates(partOf, name) Values (1, 'Medical Certificate');
+insert into Certificates(partOf, name) Values (1, 'Blood Donation Certificate');
 
-insert into Certificates(of, name) Values (3, 'Doctor Certificate');
+insert into Certificates(partOf, name) Values (3, 'Doctor Certificate');
 -- Allergies in profile of registered user
 create table Allergies (
 	partOf INTEGER not null,
 	name varchar(200) not null,
-	foreign key(of)
+	foreign key(partOf)
 		references Profile(id)
 			on update cascade
 			on delete cascade,
-	primary key(of, name)
+	primary key(partOf, name)
 );
 
-insert into Allergies(of, name) Values (3, 'Flower');
-
-insert into Allergies(of, name) Values (1, 'Dust');
-insert into Allergies(of, name) Values (1, 'Cloves');
+insert into Allergies(partOf, name) Values (3, 'Flower');
+insert into Allergies(partOf, name) Values (1, 'Dust');
+insert into Allergies(partOf, name) Values (1, 'Cloves');
 
 -- Hospital appointments of Registered Users
 create table HospitalAppointment (

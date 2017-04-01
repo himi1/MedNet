@@ -11,6 +11,7 @@ import SQLite
 
 class RegisteredUserViewController: MasterViewController {
 
+    @IBOutlet weak var userNameTextField: JVFloatLabeledTextField!
     @IBOutlet weak var errorText: UILabel!
     
     override func viewDidLoad() {
@@ -25,13 +26,21 @@ class RegisteredUserViewController: MasterViewController {
     }
     
     
-
+    var userType: String = ""
     @IBAction func signInButtonTapped(_ sender: UIButton) {
-        errorText.isHidden = true
-        errorText.text = ""
-        
-        var validated: Bool = false
+       var validated: Bool = false
         validated = validateUserInput()
+        
+        switch(userType) {
+        case "Civilian": Civilian.sharedInstance.getCivilianFromDb(userName: userNameTextField.text!)
+            
+        default: print("Something went wrong.")
+  
+        }
+
+    
+        
+        
         
         if (validated) {
             //go to home page
@@ -40,12 +49,31 @@ class RegisteredUserViewController: MasterViewController {
         else {
             errorText.isHidden = false
         }
+ 
+
     }
     
     var MedNetUserId: Int64?
     func validateUserInput() -> Bool {
-        var userFound = false
-        //validate user from Database
+        do {
+            if (userNameTextField.text! != "") {
+                print("trying to fetch from db")
+            userType = try Registered.getUserTypeFromDb(userName: userNameTextField.text!)
+            }
+        }
+        catch {
+            print("Failed to get userName")
+        }
+        
+        print("userType:", userType)
+        
+        if (userType == "") {
+            errorText.text = "No such userName found."
+            return false
+        }
+
+        /*//validate user from Database
+        
         do {
             userFound = try findInRegisterTable(userName1: "lovecare")
         }
@@ -61,21 +89,19 @@ class RegisteredUserViewController: MasterViewController {
                 errorText.text = "No such user found"
             }
         }
-        catch { print("failed")
+        catch { print("failed")*/
+        //if it reaches here, means validation successful
+        return true
+        
         }
-        
-        
-        
-        
         //TODO: remove dummy user
         //create a dummy User
-        UserProfile()
+        //UserProfile()
         /*UserProfile.sharedInstance.addANewUser(firstName: "Himanshi", lastName: "Bhardwaj", phoneNo: Phone(id: 1, countryCode: 1, areaCode: 617, phoneNo: 5169439), dateOfBirth: Date(), bloodType: "O+", allergies: ["Egg allergy", "Dummy allergy1", "Dummy allergy2"], treatments: ["dummy treatment", "dummy treatment2", "dummy treatment3"], certificates: ["dummy certificates", "dummy certificate1", "dummy certificate2"], medicalRequests: [MedicalRequest(status: 2,requestType: "Manual", reason: "Dummy reason1"), MedicalRequest(status: 1,requestType: "System", reason: "Approve user"), MedicalRequest(status: 3,requestType: "Manual", reason: "Dummy reason2")])*/
         
         
-        //if it reaches here, means validation successful
-        return true
-    }
+    
+  
     
     /*
     class MedNetUser {

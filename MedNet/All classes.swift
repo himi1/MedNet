@@ -52,36 +52,38 @@ class MedicalRequest {
     var requestType: RequestType?
     var status: Status?
     
-    init (requestId: Int64, reason: String, requestType: RequestType, status: Status) {
+    init (requestId: Int64, reason: String, requestType: String, status: String) {
         self.requestId = requestId
         self.reason = reason
-        self.requestType = requestType
-        self.status = status
+        //self.requestType = requestType
+        //self.status = status
+        self.requestType = RequestType(rawValue: requestType)
+        self.status = Status(rawValue: status)
     }
 }
 
-class MedNetUser {
+/*class MedNetUser {
 	var id: Int64?
 	var name: String?
 	var emailId: String?
 	var phone: String?
 	var sentRequests: Array<MedicalRequest> = Array()
 	var receivedRequests: Array<MedicalRequest> = Array()
-}
+ }*/
 
-class RegisteredMedNetUser: MedNetUser {
+/*class RegisteredMedNetUser: MedNetUser {
 	var userName: String?
 	var profile: Profile?
 	var hospitalAppointments: Array<HospitalAppointment> = Array()
 	var services: Array<MedicalService> = Array()
-}
+ }*/
 
 class UnRegisteredMedNetUser: MedNetUser {
-	
+    
 }
 
 class Government: UnRegisteredMedNetUser {
- 
+    
 }
 
 class HealthAccrediationAuthority: UnRegisteredMedNetUser {
@@ -89,62 +91,104 @@ class HealthAccrediationAuthority: UnRegisteredMedNetUser {
 }
 
 class Other: UnRegisteredMedNetUser {
-    var connectedTo: Array<RegisteredMedNetUser> = Array()
+    var connectedTo: Array<Registered> = Array()
 }
 
 class Profile {
     var approval: Status?
     var bloodType: BloodType?
     var dateOfBirth: Date?
-    var interests: [String?] = []
-    var treatments: [String?] = []
-    var certificates: [String?] = []
-    var allergies: [String?] = []
+    
+    var interestsSet = Set<String>()
+    var treatmentSet = Set<String>()
+    var certificatesSet = Set<String>()
+    var allergiesSet = Set<String>()
+    
+    
+    init(approval: String, bloodType: String, dateOfBirth: Date) {
+        self.approval = Status(rawValue: approval)
+        self.bloodType = BloodType(rawValue: bloodType)
+        self.dateOfBirth = dateOfBirth
+        
+    }
 }
-
-class Civilian : RegisteredMedNetUser {
-    var cUID: String?
+/*
+ 
+ class Civilian : Registered {
+ var cUID: String?
 	var CUIDType: CUIDType?
-}
+ }
+ */
 
-class Hospital : RegisteredMedNetUser {
+class Hospital : Registered {
     var hospitalServices: [String?] = []
 }
 
-class Doctor : RegisteredMedNetUser {
+class Doctor : Registered {
     var specializations: [String?] = []
     var degrees: [String?] = []
     var hospitals: [Hospital?] = []
 }
 
-class VolunteerOrganization: RegisteredMedNetUser {
-
+class VolunteerOrganization: Registered {
+    
 }
 
 class MedicalService {
-	var authorizedBy: HealthAccrediationAuthority?
+    var authorizedBy: String?
     var authId: String?
     var validTo: Date?
+    init(authorizedBy: String, authId: String, validTo: Date) {
+        self.authorizedBy = authorizedBy
+        self.authId = authId
+        self.validTo = validTo
+    }
 }
 
 class Donation: MedicalService {
+    override init(authorizedBy: String, authId: String, validTo: Date) {
+        super.init(authorizedBy: authorizedBy, authId: authId, validTo: validTo)
+    }
 
+    
 }
 
 class SpecialService : MedicalService {
     var name: String?
+    init(authorizedBy: String, authId: String, validTo: Date, name: String) {
+        super.init(authorizedBy: authorizedBy, authId: authId, validTo: validTo)
+        self.name = name
+    }
 }
 
 class FundDonation: Donation {
     var fundLimit: Int64?
+    init(authorizedBy: String, authId: String, validTo: Date, fundLimit: Int64) {
+        super.init(authorizedBy: authorizedBy, authId: authId, validTo: validTo)
+        self.fundLimit = fundLimit
+    }
 }
 
 class OrganDonation : Donation {
     var name: String?
+    init(authorizedBy: String, authId: String, validTo: Date, name: String) {
+        super.init(authorizedBy: authorizedBy, authId: authId, validTo: validTo)
+        self.name = name
+    }
 }
 
 class HospitalAppointment {
-    var hospital: Hospital?
+    var hospitalName: String?
     var date: Date?
     var reason: String?
+    var start: Date?
+    var end: Date?
+    
+    init(hospitalName: String, date: Date, reason: String, start: Date, end: Date) {
+        self.hospitalName = hospitalName
+        self.date = date
+        self.reason = reason
+        self.start = start
+        self.end = end
+    }
 }
