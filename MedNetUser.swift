@@ -81,19 +81,20 @@ class MedNetUser {
     
     func getStatus(statusInt: Int64) -> String {
         switch(Int(statusInt)) {
-        case 1: return "Manual"
-        case 2: return "System"
-        default: return "Manual"
-        }
-    }
-    
-    func getRequestType(requestTypeInt: Int64) -> String {
-        switch(Int(requestTypeInt)) {
         case 1: return "Canceled"
         case 2: return "Pending"
         case 3: return "Denied"
         case 4: return "Completed"
         default: return "Pending"
+        
+        }
+    }
+    
+    func getRequestType(requestTypeInt: Int64) -> String {
+        switch(Int(requestTypeInt)) {
+        case 1: return "Manual"
+        case 2: return "System"
+        default: return "Manual"
         }
     }
     

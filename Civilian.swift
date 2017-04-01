@@ -36,30 +36,39 @@ class Civilian : Registered {
         
         do
         {
-            let query = "select p.dateOfBirth, p.approval, p.bloodType, h.name, hpt.apptDate, hpt.reason, hpt.start, hpt.end, ms.id, msa.validTo, msa.authid, ha.name, a.name, i.name, t.name, cr.name, o.name, f.fLimit from Civilian c left outer join HospitalAppointment hpt on hpt.bookedBy = c.id left outer join MedicalService ms on ms.userId = c.id  left outer join MedicalService_Authorization msa on msa.service = ms.id left outer join Organ o on o.id = ms.id left outer join Fund f on f.id = ms.id left outer join Profile p on p.userId = c.id  left outer join Allergies a on a.partOf = p.id left outer join Interests i on i.partOf = p.id  left outer join Treatments t on t.partOf = p.id  left outer join Certificates cr on cr.partOf = p.id left outer join MedNetUser h on h.id = hpt.hospital left outer join MedNetUser ha on ha.id = msa.authorizedBy where c.id = ?"
+            let query = "select p.dateOfBirth, p.approval, p.bloodType, h.name, hpt.apptDate, hpt.reason, hpt.start, hpt.end, ms.id, msa.validTo, msa.authid, ha.name, a.name, i.name, t.name, cr.name, o.name, f.fLimit, hpt.id from Civilian c left outer join HospitalAppointment hpt on hpt.bookedBy = c.id left outer join MedicalService ms on ms.userId = c.id  left outer join MedicalService_Authorization msa on msa.service = ms.id left outer join Organ o on o.id = ms.id left outer join Fund f on f.id = ms.id left outer join Profile p on p.userId = c.id  left outer join Allergies a on a.partOf = p.id left outer join Interests i on i.partOf = p.id  left outer join Treatments t on t.partOf = p.id  left outer join Certificates cr on cr.partOf = p.id left outer join MedNetUser h on h.id = hpt.hospital left outer join MedNetUser ha on ha.id = msa.authorizedBy where c.id = ?"
             
             //var profileSet = false
             let stmt = try DB.prepare(query)
-            print("self.id:", self.id)
             for row in try stmt.run(self.id)
             {   //profile construction
                 if (self.profile == nil) {
-                    self.profile = Profile(approval: row[1] as! String, bloodType: row[2] as! String, dateOfBirth: row[0] as! Date)
+                    self.profile = Profile(approval: getApproval(approvalInt: row[1] as! Int64), bloodType: getBloodType(bloodTypeInt: row[2] as! Int64), dateOfBirth: row[0] as! String)
                 }
                 
                 //hospital appointment
                 if (row[3] != nil) {
-                    self.hospitalAppointments.append(HospitalAppointment(hospitalName: row[3] as! String, date: row[4] as! Date, reason: row[5] as! String, start: row[6] as! Date, end: row[7] as! Date))
+                    var hospitalAppointAlreadypresent = false
+                    //check if hospital appointment already present
+                    for each in hospitalAppointments {
+                        if(each.appointmentId != (row[18] as! Int64)) {
+                            hospitalAppointAlreadypresent = true
+                        }
+                    }
+                    
+                    if (!hospitalAppointAlreadypresent) {
+                    self.hospitalAppointments.append(HospitalAppointment(hospitalName: row[3] as! String,  appointmentId: row[18] as! Int64, date: row[4] as! String, reason: row[5] as! String, start: row[6] as! String, end: row[7] as! String))
+                    }
                 }
                 
                 if(row[8] != nil) {
                     //organDonation construction
                     if(row[16] != nil) {
-                        self.organDonation.append(OrganDonation(authorizedBy: row[11] as! String, authId: row[10] as! String, validTo: row[9] as! Date, name: row[16] as! String))
+                        self.organDonation.append(OrganDonation(authorizedBy: row[11] as! String, authId: row[10] as! String, validTo: row[9] as! String, name: row[16] as! String))
                     }
                     //fundDonation construction
                     if (row[17] != nil) {
-                         self.fundDonation.append(FundDonation(authorizedBy: row[11] as! String, authId: row[10] as! String, validTo: row[9] as! Date, fundLimit: row[17] as! Int64))
+                         self.fundDonation.append(FundDonation(authorizedBy: row[11] as! String, authId: row[10] as! String, validTo: row[9] as! String, fundLimit: row[17] as! Int64))
                     }
                 }
                 
@@ -81,6 +90,8 @@ class Civilian : Registered {
                 }
             }
             
+            print("Read from data base")
+            
         }
         catch
         {
@@ -90,7 +101,30 @@ class Civilian : Registered {
         
     }
     
+    func getApproval(approvalInt: Int64) -> String {
+        switch(Int(approvalInt)) {
+        case 1: return "Canceled"
+        case 2: return "Pending"
+        case 3: return "Denied"
+        case 4: return "Completed"
+        default: return "Pending"
+        }
+    }
     
+    func getBloodType(bloodTypeInt: Int64) -> String {
+        switch(Int(bloodTypeInt)) {
+        case 1: return "A+"
+        case 2: return "A-"
+        case 3: return "AB+"
+        case 4: return "AB-"
+        case 1: return "B+"
+        case 2: return "B-"
+        case 3: return "O+"
+        case 4: return "O-"
+        default: return "A+"
+        }
+    }
+
     
 }
 

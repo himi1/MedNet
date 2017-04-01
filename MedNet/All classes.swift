@@ -57,6 +57,8 @@ class MedicalRequest {
         self.reason = reason
         //self.requestType = requestType
         //self.status = status
+        print("requestType:", requestType)
+        print("status:", status)
         self.requestType = RequestType(rawValue: requestType)
         self.status = Status(rawValue: status)
     }
@@ -97,7 +99,7 @@ class Other: UnRegisteredMedNetUser {
 class Profile {
     var approval: Status?
     var bloodType: BloodType?
-    var dateOfBirth: Date?
+    var dateOfBirth: String?
     
     var interestsSet = Set<String>()
     var treatmentSet = Set<String>()
@@ -105,11 +107,10 @@ class Profile {
     var allergiesSet = Set<String>()
     
     
-    init(approval: String, bloodType: String, dateOfBirth: Date) {
+    init(approval: String, bloodType: String, dateOfBirth: String) {
         self.approval = Status(rawValue: approval)
         self.bloodType = BloodType(rawValue: bloodType)
         self.dateOfBirth = dateOfBirth
-        
     }
 }
 /*
@@ -137,8 +138,8 @@ class VolunteerOrganization: Registered {
 class MedicalService {
     var authorizedBy: String?
     var authId: String?
-    var validTo: Date?
-    init(authorizedBy: String, authId: String, validTo: Date) {
+    var validTo: String?
+    init(authorizedBy: String, authId: String, validTo: String) {
         self.authorizedBy = authorizedBy
         self.authId = authId
         self.validTo = validTo
@@ -146,7 +147,7 @@ class MedicalService {
 }
 
 class Donation: MedicalService {
-    override init(authorizedBy: String, authId: String, validTo: Date) {
+    override init(authorizedBy: String, authId: String, validTo: String) {
         super.init(authorizedBy: authorizedBy, authId: authId, validTo: validTo)
     }
 
@@ -155,7 +156,7 @@ class Donation: MedicalService {
 
 class SpecialService : MedicalService {
     var name: String?
-    init(authorizedBy: String, authId: String, validTo: Date, name: String) {
+    init(authorizedBy: String, authId: String, validTo: String, name: String) {
         super.init(authorizedBy: authorizedBy, authId: authId, validTo: validTo)
         self.name = name
     }
@@ -163,7 +164,7 @@ class SpecialService : MedicalService {
 
 class FundDonation: Donation {
     var fundLimit: Int64?
-    init(authorizedBy: String, authId: String, validTo: Date, fundLimit: Int64) {
+    init(authorizedBy: String, authId: String, validTo: String, fundLimit: Int64) {
         super.init(authorizedBy: authorizedBy, authId: authId, validTo: validTo)
         self.fundLimit = fundLimit
     }
@@ -171,7 +172,7 @@ class FundDonation: Donation {
 
 class OrganDonation : Donation {
     var name: String?
-    init(authorizedBy: String, authId: String, validTo: Date, name: String) {
+    init(authorizedBy: String, authId: String, validTo: String, name: String) {
         super.init(authorizedBy: authorizedBy, authId: authId, validTo: validTo)
         self.name = name
     }
@@ -179,16 +180,20 @@ class OrganDonation : Donation {
 
 class HospitalAppointment {
     var hospitalName: String?
-    var date: Date?
+    var appointmentId: Int64?
+    var date: String?
     var reason: String?
-    var start: Date?
-    var end: Date?
+    var start: String?
+    var end: String?
     
-    init(hospitalName: String, date: Date, reason: String, start: Date, end: Date) {
+    init(hospitalName: String, appointmentId: Int64, date: String, reason: String, start: String, end: String) {
         self.hospitalName = hospitalName
+        self.appointmentId = appointmentId
         self.date = date
         self.reason = reason
         self.start = start
         self.end = end
     }
+    
+    
 }

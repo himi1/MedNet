@@ -521,6 +521,7 @@ insert into Allergies(partOf, name) Values (1, 'Cloves');
 
 -- Hospital appointments of Registered Users
 create table HospitalAppointment (
+	id int primary key autoincrement,
 	bookedBy int not null,
 	hospital int not null,
 	start time not null,

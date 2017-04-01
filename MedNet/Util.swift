@@ -19,5 +19,11 @@ class Util {
         dateFormatter.timeStyle = DateFormatter.Style.none
     }
     
+    /*let dateFormat = DateFormatter()
+    dateFormat.dateFormat = DateFormatter.Style.short
+      http://userguide.icu-project.org/formatparse/datetime
+     
+    let date = dateFormat.date(from: /* your_date_string */)*/
+    
     
 }
