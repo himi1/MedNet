@@ -86,7 +86,6 @@ class MedNetUser {
         case 3: return "Denied"
         case 4: return "Completed"
         default: return "Pending"
-        
         }
     }
     

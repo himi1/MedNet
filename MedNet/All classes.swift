@@ -22,9 +22,9 @@ enum RequestType: String {
 }
 
 enum CUIDType: String {
-    case StateId = "StateId"
+    case StateId = "State Id"
     case Passport = "Passport"
-    case DrivingLicence = "DrivingLicence"
+    case DrivingLicence = "Driving Licence"
 }
 
 enum UserType: String {
@@ -112,27 +112,6 @@ class Profile {
         self.bloodType = BloodType(rawValue: bloodType)
         self.dateOfBirth = dateOfBirth
     }
-}
-/*
- 
- class Civilian : Registered {
- var cUID: String?
-	var CUIDType: CUIDType?
- }
- */
-
-class Hospital : Registered {
-    var hospitalServices: [String?] = []
-}
-
-class Doctor : Registered {
-    var specializations: [String?] = []
-    var degrees: [String?] = []
-    var hospitals: [Hospital?] = []
-}
-
-class VolunteerOrganization: Registered {
-    
 }
 
 class MedicalService {

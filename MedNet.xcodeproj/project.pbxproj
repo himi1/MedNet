@@ -13,6 +13,9 @@
 		7E3D002A1E887DF7004DC071 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D00291E887DF7004DC071 /* Util.swift */; };
 		7E3D00301E888C4D004DC071 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D002F1E888C4D004DC071 /* SearchTextField.swift */; };
 		7E3D00321E88969C004DC071 /* AddAllergiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D00311E88969C004DC071 /* AddAllergiesViewController.swift */; };
+		7E4500B21E906D34004E89D1 /* Doctor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4500B11E906D34004E89D1 /* Doctor.swift */; };
+		7E4500BA1E9074CC004E89D1 /* VolunteerOrganization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4500B91E9074CC004E89D1 /* VolunteerOrganization.swift */; };
+		7E4500BC1E907AA0004E89D1 /* Hospital.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4500BB1E907AA0004E89D1 /* Hospital.swift */; };
 		7E5B0FB41E88C49C00B6FD58 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5B0FB31E88C49C00B6FD58 /* UserProfile.swift */; };
 		7E5B0FBC1E88D4E300B6FD58 /* AddTreatmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5B0FBB1E88D4E300B6FD58 /* AddTreatmentsViewController.swift */; };
 		7E5B0FBE1E88EA4700B6FD58 /* AddCertificatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5B0FBD1E88EA4700B6FD58 /* AddCertificatesViewController.swift */; };
@@ -151,6 +154,9 @@
 		7E3D00291E887DF7004DC071 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		7E3D002F1E888C4D004DC071 /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		7E3D00311E88969C004DC071 /* AddAllergiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAllergiesViewController.swift; sourceTree = "<group>"; };
+		7E4500B11E906D34004E89D1 /* Doctor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Doctor.swift; path = MedNet/Doctor.swift; sourceTree = "<group>"; };
+		7E4500B91E9074CC004E89D1 /* VolunteerOrganization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VolunteerOrganization.swift; sourceTree = "<group>"; };
+		7E4500BB1E907AA0004E89D1 /* Hospital.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hospital.swift; sourceTree = "<group>"; };
 		7E5B0FB31E88C49C00B6FD58 /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		7E5B0FBB1E88D4E300B6FD58 /* AddTreatmentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTreatmentsViewController.swift; sourceTree = "<group>"; };
 		7E5B0FBD1E88EA4700B6FD58 /* AddCertificatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCertificatesViewController.swift; sourceTree = "<group>"; };
@@ -249,7 +255,10 @@
 		7E464D6B1E8B66AD009E7530 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7E4500B91E9074CC004E89D1 /* VolunteerOrganization.swift */,
+				7E4500BB1E907AA0004E89D1 /* Hospital.swift */,
 				7EA7AEB51E8F319B00213ACE /* TestMe.swift */,
+				7E4500B11E906D34004E89D1 /* Doctor.swift */,
 				7EA7AEB11E8F242200213ACE /* TestSQL.swift */,
 				7E84F6611E8C8C0E003852D4 /* All classes.swift */,
 				7EA7AEBD1E8F625900213ACE /* Civilian.swift */,
@@ -751,6 +760,7 @@
 				7E84F6721E8C8C0E003852D4 /* All classes.swift in Sources */,
 				7EC8BF2B1E870EBB008915D2 /* databaseMethodsToBeDeletedLater.swift in Sources */,
 				7E5B0FC21E8A4D3E00B6FD58 /* TDBadgedCell.swift in Sources */,
+				7E4500B21E906D34004E89D1 /* Doctor.swift in Sources */,
 				7EA7AEB61E8F319B00213ACE /* TestMe.swift in Sources */,
 				7EA7AEB81E8F322100213ACE /* MedNetUser.swift in Sources */,
 				7E6FD10A1E8B29A900E565B1 /* OrganizationMedicalRequestViewController.swift in Sources */,
@@ -769,6 +779,7 @@
 				7EC8BF371E871C24008915D2 /* DataModel.swift in Sources */,
 				7EC8BF251E87078B008915D2 /* LoginViewController.swift in Sources */,
 				7EC8BED51E8705BE008915D2 /* AppDelegate.swift in Sources */,
+				7E4500BC1E907AA0004E89D1 /* Hospital.swift in Sources */,
 				7E84F67B1E8C8C0E003852D4 /* MedicalRequest.swift in Sources */,
 				7E3D00321E88969C004DC071 /* AddAllergiesViewController.swift in Sources */,
 				7EA7AEBE1E8F625900213ACE /* Civilian.swift in Sources */,
@@ -779,6 +790,7 @@
 				7E5B0FCA1E8A773300B6FD58 /* HomeViewController.swift in Sources */,
 				7E3D00281E8877EF004DC071 /* DatePickerDialog.swift in Sources */,
 				7E6FD1081E8B27BF00E565B1 /* NotApprovedViewController.swift in Sources */,
+				7E4500BA1E9074CC004E89D1 /* VolunteerOrganization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

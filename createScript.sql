@@ -450,7 +450,7 @@ create table Profile (
 
 
 insert into Profile(userId, approval, bloodType, dateOfBirth) Values(1, 2, 1, '1991-12-01');
-insert into Profile(userId, approval, bloodType, dateOfBirth) Values(3, 3, 3, '1961-02-06');
+insert into Profile(userId, approval, bloodType, dateOfBirth) Values(3, 4, 3, '1961-02-06');
 insert into Profile(userId, approval, bloodType, dateOfBirth) Values(2, 2, 2, '1987-11-01');
 insert into Profile(userId, approval) Values(6, 3);
 insert into Profile(userId, approval) Values(7, 3);
@@ -521,7 +521,7 @@ insert into Allergies(partOf, name) Values (1, 'Cloves');
 
 -- Hospital appointments of Registered Users
 create table HospitalAppointment (
-	id int primary key autoincrement,
+	id INTEGER primary key autoincrement,
 	bookedBy int not null,
 	hospital int not null,
 	start time not null,
