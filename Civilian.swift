@@ -92,10 +92,7 @@ class Civilian : Registered {
             stmt = try DB.prepare(query)
             try stmt.run(self.id, userName, 1)
             
-            /*query = "insert into Civilian(id) Values (?, ?, ?)"
-            stmt = try DB.prepare(query)
-            try stmt.run(self.id)*/
-            
+            //inserting data into Civilian class
             self.name = name
             self.emailId = emailId
             self.phoneNo = phone

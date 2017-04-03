@@ -18,7 +18,6 @@ class MedNetUser {
     var sentRequests: Array<MedicalRequest> = Array()
     var receivedRequests: Array<MedicalRequest> = Array()
     var dbInstance: SQLiteDataStore
-    //static let sharedInstance = MedNetUser()
     
     init() {
         self.dbInstance = SQLiteDataStore.sharedInstance
@@ -37,11 +36,6 @@ class MedNetUser {
     }
     
     func fetchMedNetUser() throws {
-        //var requestTypeInt: Int
-        //var requestType: String
-        //var statusInt: Int
-        //var status: String
-        
         guard let DB = self.dbInstance.DB else {
             throw DataAccessError.datastore_Connection_Error
         }
@@ -97,6 +91,7 @@ class MedNetUser {
         }
     }
     
+    //just to test
     func printMedNet() {
         print("id", id)
         print("name", name)

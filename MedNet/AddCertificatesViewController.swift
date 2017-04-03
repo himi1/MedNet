@@ -126,7 +126,7 @@ class AddCertificatesViewController: MasterViewController, UITableViewDelegate, 
             
             
             //go to next page
-            navigate(segue: "segueFromCertificatesToCivilianTabBarVC")
+            navigateToHomePage()
         }
         else {
             errorText.isHidden = false

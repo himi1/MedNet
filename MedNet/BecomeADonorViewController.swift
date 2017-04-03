@@ -66,8 +66,13 @@ class BecomeADonorViewController: MasterViewController {
                 Civilian.sharedInstance.insertDonor(donationType: donateTextField.selectedItem!, detail: detailsTextField.text!)
             case "Doctor":
               Doctor.sharedInstance.insertDonor(donationType: donateTextField.selectedItem!, detail: detailsTextField.text!)
+                
+            
+                
             default: print("user not of type Civilian or doctor")
             }
+            //go back
+            performSegueToReturnBack()
 
             
             

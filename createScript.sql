@@ -28,6 +28,14 @@ create table RequestType (
 insert into RequestType(requestType) VALUES('Manual');
 insert into RequestType(requestType) VALUES('System');
 
+create table MedicalServiceType (
+	id INTEGER primary key autoincrement,
+	serviceType varchar(50) not null
+);
+insert into RequestType(requestType) VALUES('Fund Donation');
+insert into RequestType(requestType) VALUES('Organ Donation');
+insert into RequestType(requestType) VALUES('Special');
+
 -- Enumeration Strategy: Enumeration Table
 create table CUIDType (
 	id INTEGER primary key autoincrement,
@@ -356,15 +364,20 @@ insert into Degree(of, name) Values(3, 'MBBS');
 
 -- Medical Services by Registered Users
 create table MedicalService (
-	id INTEGER primary key,
+	id INTEGER primary key autoincrement,
 	userId INTEGER not null,
-	foreign key(userId)
+	serviceType INTEGER not null,
+	foreign key (userId)
 		references Registered(id)
 			on update cascade
-			on delete no action
+			on delete cascade,
+	foreign key(id)
+		references MedicalServiceType(serviceType)
+			on update cascade
+			on delete cascade
 );
 
-insert into MedicalService(id, userId) Values (1, 3);
+insert into MedicalService(userId, serviceType) Values (3, 2);
 
 -- Donation Service
 create table Donation (
@@ -375,7 +388,7 @@ create table Donation (
 			on delete cascade
 );
 
-insert into Donation(id) Values(1);
+insert into Donation(id) Values(2);
 
 -- Any other special service
 create table Special (
@@ -414,17 +427,12 @@ insert into Organ(id, name) Values(1, 'Blood');
 
 -- Authorization for providing medical services
 create table MedicalService_Authorization (
-	service INTEGER not null,
-	authId varchar(10) not null unique,
-	authorizedBy INTEGER not null,
-	validTo date not null,
-	primary key(service, authorizedBy)
+	service INTEGER primary key,
+	authId varchar(10),
+	authorizedBy INTEGER,
+	validTo date,
 	foreign key (authorizedBy)
 		references HealthAccreditationAuthority(id)
-			on update cascade
-			on delete cascade,
-	foreign key (service)
-		references MedicalService(id)
 			on update cascade
 			on delete cascade
 );

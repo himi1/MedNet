@@ -102,11 +102,7 @@ class Hospital : Registered {
             print("Failed to insert into Hospital and Hospital services tables")
         }
         
-    }
-
-
-    
-    
+    } 
     
 }
 

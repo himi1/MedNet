@@ -1,5 +1,5 @@
 //
-//  All classes.swift
+//  All other classes.swift
 //  MedNet
 //
 //  Created by Himanshi Bhardwaj on 3/29/17.
@@ -64,28 +64,10 @@ class MedicalRequest {
     }
 }
 
-/*class MedNetUser {
-	var id: Int64?
-	var name: String?
-	var emailId: String?
-	var phone: String?
-	var sentRequests: Array<MedicalRequest> = Array()
-	var receivedRequests: Array<MedicalRequest> = Array()
- }*/
-
-/*class RegisteredMedNetUser: MedNetUser {
-	var userName: String?
-	var profile: Profile?
-	var hospitalAppointments: Array<HospitalAppointment> = Array()
-	var services: Array<MedicalService> = Array()
- }*/
-
 class UnRegisteredMedNetUser: MedNetUser {
-    
 }
 
 class Government: UnRegisteredMedNetUser {
-    
 }
 
 class HealthAccrediationAuthority: UnRegisteredMedNetUser {
@@ -129,8 +111,6 @@ class Donation: MedicalService {
     override init(authorizedBy: String, authId: String, validTo: String) {
         super.init(authorizedBy: authorizedBy, authId: authId, validTo: validTo)
     }
-
-    
 }
 
 class SpecialService : MedicalService {

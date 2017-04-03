@@ -121,7 +121,9 @@ class AddHospitalServicesViewController: MasterViewController, UITableViewDelega
         if (validated) {
             //add hospitalServices to DB
             Hospital.sharedInstance.insertHospitalServicesIntoDb(hospitalServicesList: hospitalServicesList)
-            //go to next page
+            //go to home page
+            //navigateToHomePage()
+            
             //navigate(segue: "segueFromAddHospitalServicesToAddTreatmentsViewController")
         }
         else {

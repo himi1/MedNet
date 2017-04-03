@@ -31,7 +31,7 @@ class Registered: MedNetUser {
             for row in try stmt.run(userName)
             {
                 if (row[0] != nil) {
-                return (Registered.getUserType(userTypeInt: row[0] as! Int64))
+                    return (Registered.getUserType(userTypeInt: row[0] as! Int64))
                 }
                 
             }
@@ -78,11 +78,11 @@ class Registered: MedNetUser {
             for row in try stmt.run(self.userName)
             {
                 if (row[0] != nil) {
-                self.getMedNetUserFromDb(id: (row[0] as? Int64)!)
-            }
+                    self.getMedNetUserFromDb(id: (row[0] as? Int64)!)
+                }
                 else {
                 }
-        }
+            }
             
         }
         catch
@@ -94,8 +94,8 @@ class Registered: MedNetUser {
     }
     
     
-
-
+    
+    
     func fetchProfileHospitalAppointmentAndDonations(userType: String) throws {
         guard let DB = self.dbInstance.DB else {
             throw DataAccessError.datastore_Connection_Error
@@ -132,11 +132,15 @@ class Registered: MedNetUser {
                 if(row[8] != nil) {
                     //organDonation construction
                     if(row[16] != nil) {
+                        if (row[11] != nil) {
                         self.organDonation.append(OrganDonation(authorizedBy: row[11] as! String, authId: row[10] as! String, validTo: row[9] as! String, name: row[16] as! String))
+                    }
                     }
                     //fundDonation construction
                     if (row[17] != nil) {
+                        if (row[11] != nil) {
                         self.fundDonation.append(FundDonation(authorizedBy: row[11] as! String, authId: row[10] as! String, validTo: row[9] as! String, fundLimit: row[17] as! Int64))
+                    }
                     }
                 }
                 
@@ -203,7 +207,7 @@ class Registered: MedNetUser {
                 try stmt?.run(each, self.id)
                 
                 self.profile?.certificatesSet.insert(each)
-                }
+            }
             
         }
         catch {
@@ -235,12 +239,12 @@ class Registered: MedNetUser {
             var stmt = try DB?.prepare(query)
             let id = Int64(self.id!)
             try stmt?.run(Int64(1), Int64(2), reason, id)
-
+            
             query = "insert into MedicalRequest_MedNetUser (placedTo, have) select id, ? from MedNetUser where name = ?"
             stmt = try DB?.prepare(query)
             try stmt?.run(DB?.lastInsertRowid, name)
-
-
+            
+            
         }
         catch {
             //self.dbInstance.DB.err
@@ -274,23 +278,51 @@ class Registered: MedNetUser {
     
     
     func insertDonor(donationType: String, detail: String) {
-        var searchedResultNames: [String] = []
         let DB = self.dbInstance.DB!
         do {
-            //insert into MedicalRequests
-            let query = "insert into MedicalServices(id) Values(?)"
-            let stmt = try DB.prepare(query)
-            for row in try stmt.run() {
-                searchedResultNames.append(row[0] as! String)
+            
+            if (donationType == "Funds") {
+                var query = "insert into MedicalService (userId, serviceType) Values(?, ?)"
+                var stmt = try DB.prepare(query)
+                try stmt.run(self.id, 1)
+                let id = DB.lastInsertRowid
+                
+                query = "insert into MedicalService_Authorization (service) Values(?)"
+                stmt = try DB.prepare(query)
+                try stmt.run(id)
+                
+                query = "insert into Donation (id) Values(?)"
+                stmt = try DB.prepare(query)
+                try stmt.run(id)
+                
+                query = "insert into Fund (id, fLimit) Values(?, ?)"
+                stmt = try DB.prepare(query)
+                try stmt.run(id, Double(detail))
+            }
+                
+            else if (donationType == "Organs") {
+                var query = "insert into MedicalService (userId, serviceType) Values(?, ?)"
+                var stmt = try DB.prepare(query)
+                try stmt.run(self.id, 2)
+                let id = DB.lastInsertRowid
+                
+                query = "insert into MedicalService_Authorization (service) Values(?)"
+                stmt = try DB.prepare(query)
+                try stmt.run(id)
+                
+                query = "insert into Donation (id) Values(?)"
+                stmt = try DB.prepare(query)
+                try stmt.run(id)
+                
+                query = "insert into Organ (id, name) Values(?, ?)"
+                stmt = try DB.prepare(query)
+                try stmt.run(id, detail)
             }
         }
         catch {
             //self.dbInstance.DB.err
-            print("No user found with that search text")
+            print("Unable to insert Donor data")
         }
-
-        
-        
     }
     
     

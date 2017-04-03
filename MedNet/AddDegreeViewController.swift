@@ -123,6 +123,7 @@ class AddDegreeViewController: MasterViewController, UITableViewDelegate, UITabl
             Doctor.sharedInstance.insertDegreesIntoDoctor(degreeList: degreesList)
                         
             //go to next page
+            navigateToHomePage()
             //navigate(segue: "segueFromAddDegreesToAddTreatmentsViewController")
         }
         else {

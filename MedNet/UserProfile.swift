@@ -12,16 +12,6 @@ class UserProfile {
     static let sharedInstance = UserProfile()
     var userType = ""
 
-    //var phoneNo: Phone?
-    //var firstName: String? = "Himi"
-    //var lastName: String?
-    
-    //var dateOfBirth: Date?
-    //var bloodType: String?
-    //var allergies: [String?]
-    //var treatments: [String?]
-    //var certificates: [String?]
-    //var medicalRequests: [MedicalRequest]
     var approvedStatus: String?
     var userId: String?
     var userName: String?
