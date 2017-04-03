@@ -25,18 +25,20 @@ class RegisteredUserViewController: MasterViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    var userType: String = ""
     @IBAction func signInButtonTapped(_ sender: UIButton) {
     errorText.isHidden = true
        var validated: Bool = false
         validated = validateUserInput()
         
         if (validated) {
+            UserProfile.sharedInstance.userType = userType
         switch(userType) {
         case "Civilian": Civilian.sharedInstance.getCivilianFromDb(userName: userNameTextField.text!)
+            navigateToHomePage()
         case "Doctor": Doctor.sharedInstance.getDoctorFromDb(userName: userNameTextField.text!)
+            navigateToHomePage()
         case "VolunteerOrganization": VolunteerOrganization.sharedInstance.getVolunteerOrganizationFromDb(userName: userNameTextField.text!)
+        case "Hospital": Hospital.sharedInstance.getHospitalFromDb(userName: userNameTextField.text!)
         default: print("Did not match any user type")
             errorText.text = "Something went wrong, please try again."
             errorText.isHidden = false
@@ -48,7 +50,7 @@ class RegisteredUserViewController: MasterViewController {
 
         if (validated) {
             //go to home page
-            navigateToHomePage()
+            //navigateToHomePage()
         }
     }
     

@@ -17,9 +17,9 @@ class ProfileViewController: MasterViewController {
     @IBOutlet weak var allergiesTextField: UILabel!
     @IBOutlet weak var certificatesTextField: UILabel!
     @IBOutlet weak var treatmentsTextField: UILabel!
-    var allergies = UserProfile.sharedInstance.allergies
-    var certificates = UserProfile.sharedInstance.certificates
-    var treatments = UserProfile.sharedInstance.treatments
+    var allergies = Set<String>()
+    var certificates = Set<String>()
+    var treatments = Set<String>()
     var allergiesText = ""
     var certificatesText = ""
     var treatmentsText = ""
@@ -27,11 +27,41 @@ class ProfileViewController: MasterViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameTextField.text = UserProfile.sharedInstance.firstName! + " " + UserProfile.sharedInstance.lastName!
-        let phoneNo = UserProfile.sharedInstance.phoneNo!
-        phoneNumberTextField.text = String(phoneNo)
-        dateOfBirthTextField.text = Util().dateFormatter.string(from: UserProfile.sharedInstance.dateOfBirth!)
-        bloodTypeTextField.text = UserProfile.sharedInstance.bloodType?.rawValue
+        
+        switch(UserProfile.sharedInstance.userType) {
+        case "Civilian":
+            nameTextField.text = Civilian.sharedInstance.name
+            phoneNumberTextField.text = String(describing: Civilian.sharedInstance.phoneNo!)
+            dateOfBirthTextField.text = String(describing: Civilian.sharedInstance.profile?.dateOfBirth!)
+            bloodTypeTextField.text = Civilian.sharedInstance.profile?.bloodType?.rawValue
+            if (Civilian.sharedInstance.profile?.allergiesSet != nil) {
+                allergies = (Civilian.sharedInstance.profile?.allergiesSet)!
+            }
+            if (Civilian.sharedInstance.profile?.certificatesSet != nil) {
+                certificates =  (Civilian.sharedInstance.profile?.certificatesSet)!
+            }
+            if (Civilian.sharedInstance.profile?.treatmentSet != nil) {
+                treatments = (Civilian.sharedInstance.profile?.treatmentSet)!
+            }
+            
+        case "Doctor":
+            nameTextField.text = Doctor.sharedInstance.name
+            phoneNumberTextField.text = String(describing: Doctor.sharedInstance.phoneNo!)
+            dateOfBirthTextField.text = String(describing: Doctor.sharedInstance.profile?.dateOfBirth!)
+            bloodTypeTextField.text = Doctor.sharedInstance.profile?.bloodType?.rawValue
+            if (Doctor.sharedInstance.profile?.allergiesSet != nil) {
+                allergies = (Doctor.sharedInstance.profile?.allergiesSet)!
+            }
+            if (Doctor.sharedInstance.profile?.certificatesSet != nil) {
+                certificates =  (Doctor.sharedInstance.profile?.certificatesSet)!
+            }
+            if (Doctor.sharedInstance.profile?.treatmentSet != nil) {
+                treatments = (Doctor.sharedInstance.profile?.treatmentSet)!
+            }
+            
+            
+        default: print("Not a doctor or civilian")
+        }
         
         //Allergies
         if (allergies.count == 0) {
@@ -40,10 +70,10 @@ class ProfileViewController: MasterViewController {
         else {
             
             for allergy in allergies {
-                allergiesText += allergy! + "\n"
+                allergiesText += allergy + "\n"
             }
         }
-
+        
         //certificates
         if (certificates.count == 0) {
             certificatesText = "Not added"
@@ -51,7 +81,7 @@ class ProfileViewController: MasterViewController {
         else {
             
             for certificate in certificates {
-                certificatesText += certificate! + "\n"
+                certificatesText += certificate + "\n"
             }
         }
         
@@ -62,10 +92,10 @@ class ProfileViewController: MasterViewController {
         else {
             
             for treatment in treatments {
-                treatmentsText += treatment! + "\n"
+                treatmentsText += treatment + "\n"
             }
         }
-
+        
         allergiesTextField.text = allergiesText
         certificatesTextField.text = certificatesText
         treatmentsTextField.text = treatmentsText

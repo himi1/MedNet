@@ -10,10 +10,13 @@ import UIKit
 import SQLite
 
 class MasterViewController: UIViewController {
+    let donationTypeList = ["Funds", "Organs"]
+    var userType = ""
     let userTypeList = ["Civilian", "Doctor", "Volunteer organization", "Hospital"]
     let bloodTypeList = ["AB+", "AB-", "A+", "A-", "B+", "B-", "O+", "O-"]
-    let treatmentSuggestionList = ["Sinus treatment", "Skin treatment",
-                                   "Teeth treatment"]
+    let treatmentSuggestionList = ["Sinus treatment", "Skin treatment", "Teeth treatment"]
+    let degreeSuggestionList = ["MBBS", "MD", "PG"]
+    let hospitalServicesSuggestionList = ["Cardiology", "Xray", "Orthodontics"]
     let allergySuggestionList = ["Eggs(Food Allergy)",
                                  "Milk(Food Allergy)",
                                  "Peanuts(Food Allergy)",
@@ -36,6 +39,8 @@ class MasterViewController: UIViewController {
     let certificateSuggestionList = ["Nursing certificate",
                                      "Medical certificate",
                                      "Teeth certificate"]
+    
+    let cUIDTypeList = ["State Id", "Passport", "Driving Licence"]
     
     let mainDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
  

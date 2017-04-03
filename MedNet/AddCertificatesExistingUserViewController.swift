@@ -10,7 +10,7 @@ import UIKit
 //import SearchTextField
 
 
-class AddCertificatesViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {
+class AddCertificatesExistingUserViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var CertificateTableView: UITableView!
     @IBOutlet weak var addCertificateView: UIView!
     @IBOutlet weak var haveCertificateSwitch: UISwitch!
@@ -112,7 +112,7 @@ class AddCertificatesViewController: MasterViewController, UITableViewDelegate, 
     
     //MARK: - Navigation
     
-    @IBAction func nextButtonTapped(_ sender: UIBarButtonItem) {
+    @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
         errorText.isHidden = true
         errorText.text = ""
         
@@ -120,13 +120,19 @@ class AddCertificatesViewController: MasterViewController, UITableViewDelegate, 
         validated = validateUserInput()
         
         if (validated) {
-            //add data to UserProfile class
+            //add data to User class
+            switch(UserProfile.sharedInstance.userType) {
+            case "Civilian": Civilian.sharedInstance.insertCertificates(certificates: certificateList)
+            case "Doctor": Doctor.sharedInstance.insertCertificates(certificates: certificateList)
+            //case "VolunteerOrganization": VolunteerOrganization.sharedInstance.getVolunteerOrganizationFromDb(userName: userNameTextField.text!)
+            //case "Hospital": Hospital.sharedInstance.getHospitalFromDb(userName: userNameTextField.text!)
+            default: print("Did not match any user type")
+            errorText.text = "Something went wrong, please try again."
+            errorText.isHidden = false
+            }
+            //Registered.sharedInstance.insertCertificates(certificateList)
             
             UserProfile.sharedInstance.setCertificates(certificates: certificateList)
-            
-            
-            //go to next page
-            navigate(segue: "segueFromCertificatesToCivilianTabBarVC")
         }
         else {
             errorText.isHidden = false

@@ -1,23 +1,22 @@
 //
-//  AddCertificatesViewController.swift
+//  AddDegreesViewController.swift
 //  MedNet
 //
-//  Created by Himanshi Bhardwaj on 3/27/17.
+//  Created by Himanshi Bhardwaj on 3/26/17.
 //  Copyright © 2017 HPP. All rights reserved.
 //
 
 import UIKit
 //import SearchTextField
 
-
-class AddCertificatesViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet weak var CertificateTableView: UITableView!
-    @IBOutlet weak var addCertificateView: UIView!
-    @IBOutlet weak var haveCertificateSwitch: UISwitch!
-    @IBOutlet weak var newCertificateTextField: SearchTextField!
+class AddDegreeViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var DegreesTableView: UITableView!
+    @IBOutlet weak var addDegreesView: UIView!
+    @IBOutlet weak var haveDegreesSwitch: UISwitch!
+    @IBOutlet weak var newDegreeTextField: SearchTextField!
     @IBOutlet weak var errorText: UILabel!
     
-    var certificateList: [String] = []
+    var degreesList: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,57 +24,58 @@ class AddCertificatesViewController: MasterViewController, UITableViewDelegate, 
         configureTableView()
         errorText.isHidden = true
         
-        haveCertificateSwitchValueChanged(sender: haveCertificateSwitch)
+        haveDegreesSwitchValueChanged(sender: haveDegreesSwitch)
         
-        //New Certificate text field
-        newCertificateTextField.placeholder = "Add a certificate"
+        //New Degree text field
+        newDegreeTextField.placeholder = "Add an degree"
         
-        setSearching(textField: newCertificateTextField, list: certificateSuggestionList)
+        setSearching(textField: newDegreeTextField, list: degreeSuggestionList)
     }
     
     func configureTableView() {
-        // CertificateTableView Delegate
-        CertificateTableView.delegate      =   self
-        CertificateTableView.dataSource    =   self
+        // DegreesTableView Delegate
+        DegreesTableView.delegate      =   self
+        DegreesTableView.dataSource    =   self
         
-        // Set color of CertificateTableView
-        CertificateTableView.backgroundColor = UIColor.white
+        // Set color of DegreesTableView
+        DegreesTableView.backgroundColor = UIColor.white
     }
     
-    @IBAction func addCertificateButtonTapped(_ sender: UIButton) {
-        if (self.newCertificateTextField.text! != "") {
-            certificateList.append(self.newCertificateTextField.text!)
+    @IBAction func addDegreesButtonTapped(_ sender: UIButton) {
+        if (self.newDegreeTextField.text! != "") {
+            degreesList.append(self.newDegreeTextField.text!)
             
-            //to reload the CertificateTableView
-            CertificateTableView.reloadData()
-            //reset newCertificateTextField
-            newCertificateTextField.text = ""
-            newCertificateTextField.placeholder = "Add another certificate"
+            //to reload the DegreesTableView
+            DegreesTableView.reloadData()
+            //reset newDegreeTextField
+            newDegreeTextField.text = ""
+            newDegreeTextField.placeholder = "Add another degree"
         }
+        
     }
     
     
-    //MARK: Have Certificate Switch button
-    @IBAction func haveCertificateSwitchValueChanged(sender: UISwitch) {
+    //MARK: Have Degrees Switch button
+    @IBAction func haveDegreesSwitchValueChanged(sender: UISwitch) {
         if sender.isOn {
-            addCertificateView.isHidden = false
+            addDegreesView.isHidden = false
             //RecommendationEngineData.sharedInstance.haveChildren = true
         }
         else {
-            addCertificateView.isHidden = true
+            addDegreesView.isHidden = true
             //RecommendationEngineData.sharedInstance.haveChildren = false
         }
     }
     
-    //MARK: CertificateTableView table view
+    //MARK: DegreesTableView table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return certificateList.count //self.ChildrenNameAndAge.count
+        return degreesList.count //self.ChildrenNameAndAge.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell1")! as UITableViewCell
         
-        cell.textLabel?.text = certificateList[indexPath.row]
+        cell.textLabel?.text = degreesList[indexPath.row]
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         return cell
@@ -90,21 +90,20 @@ class AddCertificatesViewController: MasterViewController, UITableViewDelegate, 
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") {action in
             //handle delete
-            self.certificateList.remove(at: indexPath.row)
+            self.degreesList.remove(at: indexPath.row)
             
-            //to reload the CertificateTableView
-            self.CertificateTableView.reloadData()
+            //to reload the DegreesTableView
+            self.DegreesTableView.reloadData()
             
         }
         
         let editAction = UITableViewRowAction(style: .normal, title: "Edit") {action in
             //handle edit
-            //handle delete
-            self.newCertificateTextField.text = self.certificateList[indexPath.row]
-            self.certificateList.remove(at: indexPath.row)
+            self.newDegreeTextField.text = self.degreesList[indexPath.row]
+            self.degreesList.remove(at: indexPath.row)
             
-            //to reload the CertificateTableView
-            self.CertificateTableView.reloadData()
+            //to reload the DegreesTableView
+            self.DegreesTableView.reloadData()
         }
         
         return [deleteAction, editAction]
@@ -120,13 +119,11 @@ class AddCertificatesViewController: MasterViewController, UITableViewDelegate, 
         validated = validateUserInput()
         
         if (validated) {
-            //add data to UserProfile class
-            
-            UserProfile.sharedInstance.setCertificates(certificates: certificateList)
-            
-            
+            //add degrees to DB
+            Doctor.sharedInstance.insertDegreesIntoDoctor(degreeList: degreesList)
+                        
             //go to next page
-            navigate(segue: "segueFromCertificatesToCivilianTabBarVC")
+            //navigate(segue: "segueFromAddDegreesToAddTreatmentsViewController")
         }
         else {
             errorText.isHidden = false
@@ -136,6 +133,10 @@ class AddCertificatesViewController: MasterViewController, UITableViewDelegate, 
     
     func validateUserInput() -> Bool {
         //nothing to validate till now
+        if (degreesList.count == 0) {
+            errorText.text = "Atleast one degree is required"
+            return false
+        }
         
         //if it reaches here, means validation successful
         return true
@@ -149,4 +150,6 @@ class AddCertificatesViewController: MasterViewController, UITableViewDelegate, 
      // Pass the selected object to the new view controller.
      }
      */
+    
 }
+

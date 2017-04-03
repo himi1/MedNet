@@ -12,6 +12,9 @@ class AddRequestViewController: MasterViewController {
     
     @IBOutlet weak var errorText: UILabel!
     @IBOutlet weak var requestTextField: UITextField!
+    @IBOutlet weak var nameTextField: SearchTextField!
+    
+    
     
     var requestCurrentValue: String?
     
@@ -36,7 +39,12 @@ class AddRequestViewController: MasterViewController {
         
         if (validated) {
             //add data to UserProfile class
-            UserProfile.sharedInstance.addMedicalRequest(status: "Pending", requestType: "Manual", reason: requestTextField.text!)
+            
+            switch(UserProfile.sharedInstance.userType) {
+            case "Civilian": Civilian.sharedInstance.insertMedicalRequests(reason: requestTextField.text!, name: nameTextField.text!)
+            case "Doctor": Doctor.sharedInstance.insertMedicalRequests(reason: requestTextField.text!, name: nameTextField.text!)
+            default: print("user not of type Civilian or doctor")
+            }
             
             //go to back page
             performSegueToReturnBack()
@@ -52,7 +60,10 @@ class AddRequestViewController: MasterViewController {
             errorText.text = "Can't add empty request"
             return false
         }
-        
+        else if (nameTextField.text?.isEmpty)! {
+            errorText.text = "All fields are mandatory"
+            return false
+        }
         //if it reaches here, means validation successful
         return true
     }

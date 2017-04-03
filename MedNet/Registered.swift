@@ -35,6 +35,7 @@ class Registered: MedNetUser {
                 }
                 
             }
+            
         }
         catch {
             print("Error", DataAccessError.search_Error)
@@ -53,12 +54,6 @@ class Registered: MedNetUser {
         default: return "Civilian"
         }
     }
-
-
-    
-    
-    
-    
     
     func getRegisteredFromDb(userName: String) {
         do {
@@ -99,6 +94,8 @@ class Registered: MedNetUser {
     }
     
     
+
+
     func fetchProfileHospitalAppointmentAndDonations(userType: String) throws {
         guard let DB = self.dbInstance.DB else {
             throw DataAccessError.datastore_Connection_Error
@@ -131,6 +128,7 @@ class Registered: MedNetUser {
                     }
                 }
                 
+                //MedicalServices
                 if(row[8] != nil) {
                     //organDonation construction
                     if(row[16] != nil) {
@@ -195,7 +193,105 @@ class Registered: MedNetUser {
         }
     }//end of fetchProfileHospitalAppointmentAndDonations
     
+    func insertCertificates(certificates: [String]) {
+        let DB = self.dbInstance.DB
+        do {
+            let query = "insert into Certificates (partOf, name) select id, ? from profile p where p.userId = ?"
+            
+            for each in certificates {
+                let stmt = try DB?.prepare(query)
+                try stmt?.run(each, self.id)
+                
+                self.profile?.certificatesSet.insert(each)
+                }
+            
+        }
+        catch {
+            print("error inserting into certificates table")
+        }
+    }
     
+    func insertHospitalAppointments(hospitalName: String, date: String, reason: String, start: String, end: String) {
+        let DB = self.dbInstance.DB
+        do {
+            let query =  "insert into HospitalAppointment (bookedBy, hospital, start, end, apptDate, reason) select ?, id, ?, ?, ?, ? from MedNetUser where name = ?"
+            
+            let stmt = try DB?.prepare(query)
+            try stmt?.run(self.id, start, end, date, reason, hospitalName)
+            //try stmt?.run(1,id, "15:00", "16:00", "2017-07-28",  "reasonssnsn" from MedNetUser where name = "Phoenix Hospital"
+            
+        }
+        catch {
+            print("error inserting into HospitalAppointment table")
+        }
+        
+    }
+    
+    func insertMedicalRequests(reason: String, name: String) {
+        let DB = self.dbInstance.DB
+        do {
+            //insert into MedicalRequests
+            var query = "insert into MedicalRequest (status, requestType, reason, placedBy) Values(?, ?, ?, ?)"
+            var stmt = try DB?.prepare(query)
+            let id = Int64(self.id!)
+            try stmt?.run(Int64(1), Int64(2), reason, id)
+
+            query = "insert into MedicalRequest_MedNetUser (placedTo, have) select id, ? from MedNetUser where name = ?"
+            stmt = try DB?.prepare(query)
+            try stmt?.run(DB?.lastInsertRowid, name)
+
+
+        }
+        catch {
+            //self.dbInstance.DB.err
+            print("error inserting into MedicalRequest and MedicalRequests_MedNetUser table")
+        }
+        
+    }
+    
+    //todo:
+    func getAllHospitalNameFromDb() {
+        
+    }
+    
+    func searchProfiles(searchText: String) -> [String] {
+        var searchedResultNames: [String] = []
+        let DB = self.dbInstance.DB!
+        do {
+            //insert into MedicalRequests
+            let query = "select m.name as Name from MedNetUser m, Registered r where m.name like ? and m.id = r.id"
+            let stmt = try DB.prepare(query)
+            for row in try stmt.run(searchText + "%") {
+                searchedResultNames.append(row[0] as! String)
+            }
+        }
+        catch {
+            //self.dbInstance.DB.err
+            print("No user found with that search text")
+        }
+        return searchedResultNames
+    }
+    
+    
+    func insertDonor(donationType: String, detail: String) {
+        var searchedResultNames: [String] = []
+        let DB = self.dbInstance.DB!
+        do {
+            //insert into MedicalRequests
+            let query = "insert into MedicalServices(id) Values(?)"
+            let stmt = try DB.prepare(query)
+            for row in try stmt.run() {
+                searchedResultNames.append(row[0] as! String)
+            }
+        }
+        catch {
+            //self.dbInstance.DB.err
+            print("No user found with that search text")
+        }
+
+        
+        
+    }
     
     
     

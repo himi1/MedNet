@@ -368,7 +368,7 @@ insert into MedicalService(id, userId) Values (1, 3);
 
 -- Donation Service
 create table Donation (
-	id INTEGER not null,
+	id INTEGER primary key,
 	foreign key(id)
 		references MedicalService(id)
 			on update cascade
@@ -380,6 +380,8 @@ insert into Donation(id) Values(1);
 -- Any other special service
 create table Special (
 	id INTEGER not null,
+	name varchar(200) not null,
+	primary key(id, name)
 	foreign key(id)
 		references MedicalService(id)
 			on update cascade
@@ -390,6 +392,7 @@ create table Special (
 create table Fund (
 	id INTEGER not null,
 	fLimit double not null,
+	primary key(id, fLimit)
 	foreign key(id)
 		references Donation(id)
 			on update cascade
@@ -400,6 +403,7 @@ create table Fund (
 create table Organ (
 	id INTEGER not null,
 	name varchar(100) not null,
+	primary key(id, name)
 	foreign key(id)
 		references Donation(id)
 			on update cascade

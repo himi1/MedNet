@@ -10,6 +10,7 @@ import Foundation
 
 class UserProfile {
     static let sharedInstance = UserProfile()
+    var userType = ""
 
     //var phoneNo: Phone?
     //var firstName: String? = "Himi"
