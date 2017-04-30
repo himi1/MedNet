@@ -9,7 +9,7 @@
 import Foundation
 
 class UserProfile {
-    static let sharedInstance = UserProfile()
+    static var sharedInstance = UserProfile()
     var userType = ""
 
     var approvedStatus: String?
@@ -18,8 +18,8 @@ class UserProfile {
     var firstName: String?
     var lastName: String?
     var phoneNo: Int64?
-    var placedMedicalRequests : [MedicalRequest?] = []
-    var incomingMedicalRequests: [MedicalRequest?] = []
+    var placedMedicalRequests : Array<MedicalRequest> = Array()
+    var incomingMedicalRequests: Array<MedicalRequest> = Array()
     var hospitalAppointments: [HospitalAppointment?] = []
     var fundDonations: [FundDonation?] = []
     var organDonations: [OrganDonation?] = []
@@ -30,6 +30,7 @@ class UserProfile {
     var treatments: [String?] = []
     var certificates: [String?] = []
     var allergies: [String?] = []
+    var donations: [(String, String)] = []
     
     /*init() {
         firstName = ""

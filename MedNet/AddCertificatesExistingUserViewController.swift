@@ -123,7 +123,19 @@ class AddCertificatesExistingUserViewController: MasterViewController, UITableVi
             //add data to User class
             switch(UserProfile.sharedInstance.userType) {
             case "Civilian": Civilian.sharedInstance.insertCertificates(certificates: certificateList)
+            do {
+            try Civilian.sharedInstance.fetchProfileHospitalAppointmentAndDonations(userType: "Civilian")
+                }
+            catch {
+                print("unable to update certificates of the user")
+                }
             case "Doctor": Doctor.sharedInstance.insertCertificates(certificates: certificateList)
+            do {
+                try Doctor.sharedInstance.fetchProfileHospitalAppointmentAndDonations(userType: "Doctor")
+            }
+            catch {
+                print("unable to update certificates of the user")
+                }
             //case "VolunteerOrganization": VolunteerOrganization.sharedInstance.getVolunteerOrganizationFromDb(userName: userNameTextField.text!)
             //case "Hospital": Hospital.sharedInstance.getHospitalFromDb(userName: userNameTextField.text!)
             default: print("Did not match any user type")

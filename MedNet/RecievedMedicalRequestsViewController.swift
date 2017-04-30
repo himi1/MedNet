@@ -1,15 +1,13 @@
+//  RecievedMedicalRequestsViewController.swift
+//  MedNet
 //
-//  OrganizationMedicalRequestViewController.swift
-//  
-//
-//  Created by Himanshi Bhardwaj on 3/28/17.
-//
+//  Created by Himanshi Bhardwaj on 3/27/17.
+//  Copyright © 2017 HPP. All rights reserved.
 //
 
 import UIKit
 
-
-class OrganizationMedicalRequestViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {
+class RecievedMedicalRequestsViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var medicalRequestView: UIView!
     @IBOutlet weak var medicalRequestTableView: UITableView!
@@ -23,7 +21,6 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //show or hide tableView based on medical requests
         self.configureTableView()
     }
     
@@ -37,7 +34,7 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
     }
     
     func showOrHideTableView() {
-        if (UserProfile.sharedInstance.placedMedicalRequests.count == 0) {
+        if (UserProfile.sharedInstance.incomingMedicalRequests.count == 0) {
             medicalRequestView.isHidden = true
         }
         else {
@@ -53,12 +50,12 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
     
     //MARK: - Table view functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return UserProfile.sharedInstance.placedMedicalRequests.count
+        return UserProfile.sharedInstance.incomingMedicalRequests.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Getting the right element
-        let medicalRequest = UserProfile.sharedInstance.placedMedicalRequests[indexPath.row]
+        let medicalRequest = UserProfile.sharedInstance.incomingMedicalRequests[indexPath.row]
         
         let cellIdentifier = "MedicalRequestCell"
         
@@ -76,7 +73,7 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
         cell?.badgeRadius = 20
         
         cell?.textLabel?.text = medicalRequest.reason
-        //cell?.detailTextLabel?.text = "Request type: " + medicalRequest?.requestType!.rawValue
+        //cell?.detailTextLabel?.text = "Request type: " + medicalRequest?.requestType!
         
         // Returning the cell
         return cell!
@@ -93,6 +90,7 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
         case "Completed": return (.green, "Completed")
         case "Denied": return (.red, "Denied")
         default: return (.red, "Denied")
+            
         }
     }
     
@@ -106,7 +104,7 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") {action in
             //handle delete
-            UserProfile.sharedInstance.placedMedicalRequests.remove(at: indexPath.row)
+            UserProfile.sharedInstance.incomingMedicalRequests.remove(at: indexPath.row)
             
             //to reload the AllergiesTableView
             self.medicalRequestTableView.reloadData()
@@ -114,11 +112,11 @@ class OrganizationMedicalRequestViewController: MasterViewController, UITableVie
             
         }
         
-        let editAction = UITableViewRowAction(style: .normal, title: "Approve") {action in
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") {action in
             //handle edit
-            self.editRequestString = (UserProfile.sharedInstance.placedMedicalRequests[indexPath.row].reason!)
+            self.editRequestString = (UserProfile.sharedInstance.incomingMedicalRequests[indexPath.row].reason!)
             
-            UserProfile.sharedInstance.placedMedicalRequests.remove(at: indexPath.row)
+            UserProfile.sharedInstance.incomingMedicalRequests.remove(at: indexPath.row)
             
             //to reload the AllergiesTableView
             self.medicalRequestTableView.reloadData()

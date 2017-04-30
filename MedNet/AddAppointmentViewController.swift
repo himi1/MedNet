@@ -41,10 +41,27 @@ class AddAppointmentViewController: UIViewController {
             switch(UserProfile.sharedInstance.userType) {
             case "Civilian":
                 Civilian.sharedInstance.insertHospitalAppointments(hospitalName: hospitalNameTextField.text!, date: dateTextField.text!, reason: reasonTextField.text!, start: startTimeTextField.text!, end: endTimeTextField.text!)
+                do {
+                    try Civilian.sharedInstance.fetchProfileHospitalAppointmentAndDonations(userType: "Civilian")
+                }
+                catch {
+                    print("unable to update medical appointment and donations from user")
+                }
             case "Doctor":
                 Doctor.sharedInstance.insertHospitalAppointments(hospitalName: hospitalNameTextField.text!, date: dateTextField.text!, reason: reasonTextField.text!, start: startTimeTextField.text!, end: endTimeTextField.text!)
+                
+                do {
+                    try Doctor.sharedInstance.fetchProfileHospitalAppointmentAndDonations(userType: "Doctor")
+                }
+                catch {
+                    print("unable to update medical appointment and donations from user")
+                }
+                
             default: "Usertype is not Civilian or doctor"
             }
+            
+            //go to back page
+            performSegueToReturnBack()
         }
         
         

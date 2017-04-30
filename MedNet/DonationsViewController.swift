@@ -1,31 +1,24 @@
 //
-//  HospitalAppointmentViewController.swift
+//  DonationsViewController.swift
 //  MedNet
 //
-//  Created by Himanshi Bhardwaj on 3/27/17.
+//  Created by Himanshi Bhardwaj on 4/28/17.
 //  Copyright © 2017 HPP. All rights reserved.
 //
 
 import UIKit
 
-class HospitalAppointmentViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {
+class DonationsViewController: MasterViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var hospitalAppointmentView: UIView!
-    @IBOutlet weak var hospitalAppointmentTableView: UITableView!
+    @IBOutlet weak var donationsView: UIView!
+    @IBOutlet weak var donationsTableView: UITableView!
     var editRequestString = ""
-    var hospitalAppointments: Array<HospitalAppointment> = Array()
+    var donations: [(String, String)] = []
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        switch(UserProfile.sharedInstance.userType) {
-        case "Civilian":
-            hospitalAppointments = Civilian.sharedInstance.hospitalAppointments
-        case "Doctor":
-            hospitalAppointments = Doctor.sharedInstance.hospitalAppointments
-        default:
-            print("userType is not Doctor or Civilian")
-        }
-        hospitalAppointmentTableView.reloadData()
+        donations = UserProfile.sharedInstance.donations
+        donationsTableView.reloadData()
         showOrHideTableView()
     }
     
@@ -34,26 +27,26 @@ class HospitalAppointmentViewController: MasterViewController, UITableViewDelega
         //show or hide tableView based on Hospital appointments
         self.configureTableView()
         
-            }
+    }
     
     func configureTableView() {
-        // hospitalAppointmentTableView Delegate
-        hospitalAppointmentTableView.delegate      =   self
-        hospitalAppointmentTableView.dataSource    =   self
-        //self.hospitalAppointmentTableView.rowHeight = 44.0
+        // donationsTableView Delegate
+        donationsTableView.delegate      =   self
+        donationsTableView.dataSource    =   self
+        //self.donationsTableView.rowHeight = 44.0
         
-        // Set color of hospitalAppointmentTableView
-        hospitalAppointmentTableView.backgroundColor = UIColor.white
+        // Set color of donationsTableView
+        donationsTableView.backgroundColor = UIColor.white
     }
     
     func showOrHideTableView() {
-        if (hospitalAppointments.count == 0) {
-                hospitalAppointmentView.isHidden = true
-            }
-            else {
-                hospitalAppointmentView.isHidden = false
-            }
+        if (donations.count == 0) {
+            donationsView.isHidden = true
         }
+        else {
+            donationsView.isHidden = false
+        }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -62,7 +55,7 @@ class HospitalAppointmentViewController: MasterViewController, UITableViewDelega
     
     //MARK: - Table view functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return hospitalAppointments.count
+        return donations.count
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -71,37 +64,28 @@ class HospitalAppointmentViewController: MasterViewController, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Getting the right element
-        let hospitalAppointment = hospitalAppointments[indexPath.row]
+        let donation = self.donations[indexPath.row]
         
-        let cellIdentifier = "HospitalAppointmentCell"
+        let cellIdentifier = "donationsCell"
         
         var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? TDBadgedCell
         if(cell == nil) {
             cell = TDBadgedCell(style: .default, reuseIdentifier: cellIdentifier);
         }
-        //HospitalAppointment(hospitalName: <#T##String#>, appointmentId: <#T##Int64#>, date: <#T##String#>, reason: <#T##String#>, start: <#T##String#>, end: <#T##String#>)
         
-        let badgeString =  hospitalAppointment.date
-        cell?.badgeString = badgeString!
-        cell?.badgeColor = .green
+        let (badgeColor, badgeString, textString) = getBadgeConfigurations(fundType: donation.1)
+        cell?.badgeString = badgeString
+        cell?.badgeColor = badgeColor
         //cell?.badgeColorHighlighted = .green
         cell?.badgeTextColor = .white
         cell?.badgeFontSize = 18
         cell?.badgeRadius = 20
-        
-        let id = "ID: " + String(describing: hospitalAppointment.appointmentId!) + "\n"
-        let hname = "Name: " + hospitalAppointment.hospitalName! + "\n"
-        let reason = "Reason: " + hospitalAppointment.reason! + "\n"
-        let time = "Time: " + hospitalAppointment.start! + " to " + hospitalAppointment.end!
-        
-        
-        let textLabel = id + hname + reason + time
-            
+        let textLabel = textString + donation.0
         
         cell?.textLabel?.numberOfLines=0
         cell?.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         cell?.textLabel?.text = textLabel
-        //cell?.detailTextLabel?.text = "Request type: " + hospitalAppointment?.requestType!
+        //cell?.detailTextLabel?.text = "Request type: " + donations?.requestType!
         
         // Returning the cell
         return cell!
@@ -111,15 +95,13 @@ class HospitalAppointmentViewController: MasterViewController, UITableViewDelega
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    /*func getBadgeConfigurations(status: Status) -> (color: UIColor, string: String) {
-        switch(status.rawValue) {
-        case "Canceled": return (.red, "Cancelled")
-        case "Pending": return (.orange, "Pending")
-        case "Completed": return (.green, "Completed")
-        case "Denied": return (.red, "Denied")
-        default: return (.red, "Denied")
-        }
-    }*/
+    func getBadgeConfigurations(fundType: String) -> (color: UIColor, string: String, string: String) {
+     switch(fundType) {
+     case "organ": return (.orange, "Organ", "Organ name: ")
+     case "fund": return (.green, "Fund", "Fund limit: ")
+     default: return (.red, "N/A", "N/A")
+     }
+     }
     
     
     //to add swipe to delete and edit feature
@@ -131,10 +113,10 @@ class HospitalAppointmentViewController: MasterViewController, UITableViewDelega
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") {action in
             //handle delete
-            self.hospitalAppointments.remove(at: indexPath.row)
+            self.donations.remove(at: indexPath.row)
             
             //to reload the AllergiesTableView
-            self.hospitalAppointmentTableView.reloadData()
+            self.donationsTableView.reloadData()
             self.showOrHideTableView()
             
         }
@@ -144,7 +126,7 @@ class HospitalAppointmentViewController: MasterViewController, UITableViewDelega
     
     // MARK: - Navigation
     @IBAction func addButtonTapped() {
-        navigate(segue: "segueFromHospitalAppointmentToAddAppointmentViewController")
+        navigate(segue: "segueFromdonationsToAddAppointmentViewController")
     }
     
     //to transfer data for edit action to Add request page
@@ -157,3 +139,4 @@ class HospitalAppointmentViewController: MasterViewController, UITableViewDelega
         }
     }
 }
+

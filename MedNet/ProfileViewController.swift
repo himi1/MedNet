@@ -25,14 +25,35 @@ class ProfileViewController: MasterViewController {
     var treatmentsText = ""
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        loadProfileInformation()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadProfileInformation()
+    }
+    
+    
+    @IBAction func logoutButtonTapped(_ sender: Any) {
+        UserProfile.sharedInstance = UserProfile()
+        Civilian.sharedInstance = Civilian()
+        Doctor.sharedInstance = Doctor()
+        navigateToLoginInPage()
+    }
+    
+    func loadProfileInformation() {
+        var allergiesText = ""
+        var certificatesText = ""
+        var treatmentsText = ""
         
         switch(UserProfile.sharedInstance.userType) {
         case "Civilian":
             nameTextField.text = Civilian.sharedInstance.name
             phoneNumberTextField.text = String(describing: Civilian.sharedInstance.phoneNo!)
-            dateOfBirthTextField.text = String(describing: Civilian.sharedInstance.profile?.dateOfBirth!)
+            dateOfBirthTextField.text = Civilian.sharedInstance.profile?.dateOfBirth! ?? "N/A"
+            
             bloodTypeTextField.text = Civilian.sharedInstance.profile?.bloodType?.rawValue
             if (Civilian.sharedInstance.profile?.allergiesSet != nil) {
                 allergies = (Civilian.sharedInstance.profile?.allergiesSet)!
@@ -47,7 +68,8 @@ class ProfileViewController: MasterViewController {
         case "Doctor":
             nameTextField.text = Doctor.sharedInstance.name
             phoneNumberTextField.text = String(describing: Doctor.sharedInstance.phoneNo!)
-            dateOfBirthTextField.text = String(describing: Doctor.sharedInstance.profile?.dateOfBirth!)
+            dateOfBirthTextField.text = Doctor.sharedInstance.profile?.dateOfBirth! ?? "N/A"
+            
             bloodTypeTextField.text = Doctor.sharedInstance.profile?.bloodType?.rawValue
             if (Doctor.sharedInstance.profile?.allergiesSet != nil) {
                 allergies = (Doctor.sharedInstance.profile?.allergiesSet)!
@@ -58,7 +80,6 @@ class ProfileViewController: MasterViewController {
             if (Doctor.sharedInstance.profile?.treatmentSet != nil) {
                 treatments = (Doctor.sharedInstance.profile?.treatmentSet)!
             }
-            
             
         default: print("Not a doctor or civilian")
         }
@@ -99,13 +120,8 @@ class ProfileViewController: MasterViewController {
         allergiesTextField.text = allergiesText
         certificatesTextField.text = certificatesText
         treatmentsTextField.text = treatmentsText
+        
     }
-    
-    
-    @IBAction func logoutButtonTapped(_ sender: Any) {
-        navigateToLoginInPage()
-    }
-    
     
     
     override func didReceiveMemoryWarning() {

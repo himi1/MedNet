@@ -43,7 +43,7 @@ class VolunteerOrganization : Registered {
                     }
                     //fundDonation construction
                     if (row[5] != nil) {
-                        self.fundDonation.append(FundDonation(authorizedBy: row[3] as! String, authId: row[2] as! String, validTo: row[1] as! String, fundLimit: row[5] as! Int64))
+                        self.fundDonation.append(FundDonation(authorizedBy: row[3] as! String, authId: row[2] as! String, validTo: row[1] as! String, fundLimit: row[5] as! Double))
                     }
                 }
 

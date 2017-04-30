@@ -71,6 +71,8 @@ class NewUserViewController: MasterViewController {
         if (validated) {
             print("add a new user")
             name = firstName.text! + " " + lastName.text!
+            UserProfile.sharedInstance.userName = userNameTextField.text!
+            UserProfile.sharedInstance.userType = userType
             switch(userType) {
             case "Civilian": Civilian.sharedInstance.insertCivilianIntoDb(name: name, email: emailId.text!, phone: Int64(phoneNumber.text!)!, userName: userNameTextField.text!)
                  navigate(segue: "segueFromRegisterToCivilianVC")

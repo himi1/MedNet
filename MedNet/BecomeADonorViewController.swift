@@ -14,10 +14,11 @@ class BecomeADonorViewController: MasterViewController {
     @IBOutlet weak var donateTextField: IQDropDownTextField!
     @IBOutlet weak var detailsTextField: SearchTextField!
     @IBOutlet weak var donationView: UIView!
-    
+    @IBOutlet weak var successText: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         errorText.isHidden = true
+        successText.isHidden = true
         
          configureDropDownTextField(textField: donateTextField, list: donationTypeList)
 
@@ -64,15 +65,33 @@ class BecomeADonorViewController: MasterViewController {
             switch(UserProfile.sharedInstance.userType) {
             case "Civilian":
                 Civilian.sharedInstance.insertDonor(donationType: donateTextField.selectedItem!, detail: detailsTextField.text!)
+                
+                do {
+                    try Civilian.sharedInstance.fetchProfileHospitalAppointmentAndDonations(userType: "Civilian")
+                }
+                catch {
+                    print("unable to update medical appointment and donations from user")
+                }
+                
             case "Doctor":
               Doctor.sharedInstance.insertDonor(donationType: donateTextField.selectedItem!, detail: detailsTextField.text!)
                 
-            
+              do {
+                try Doctor.sharedInstance.fetchProfileHospitalAppointmentAndDonations(userType: "Doctor")
+              }
+              catch {
+                print("unable to update medical appointment and donations from user")
+                }
+
                 
             default: print("user not of type Civilian or doctor")
             }
+            
+            successText.isHidden = false
             //go back
-            performSegueToReturnBack()
+            //performSegueToReturnBack()
+            
+            
 
             
             

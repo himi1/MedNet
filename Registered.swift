@@ -13,8 +13,9 @@ class Registered: MedNetUser {
     var userName: String?
     var profile: Profile?
     var hospitalAppointments: Array<HospitalAppointment> = Array()
-    var fundDonation: [FundDonation] = []
-    var organDonation: [OrganDonation] = []
+    var fundDonation: Array<FundDonation> = Array()
+    var organDonation: Array<OrganDonation> = Array()
+
     //var services: Array<MedicalService> = Array()
     //static let sharedInstance = Registered()
     
@@ -93,9 +94,6 @@ class Registered: MedNetUser {
         //successful data extraction
     }
     
-    
-    
-    
     func fetchProfileHospitalAppointmentAndDonations(userType: String) throws {
         guard let DB = self.dbInstance.DB else {
             throw DataAccessError.datastore_Connection_Error
@@ -103,6 +101,20 @@ class Registered: MedNetUser {
         
         do
         {
+            var organList: [String] = []
+            var fundList: [Double] = []
+            
+            //Resetting values for a fresh fetch
+            fundDonation =  Array()
+            organDonation = Array()
+            hospitalAppointments = Array()
+            UserProfile.sharedInstance.donations = []
+            self.profile?.allergiesSet = Set<String>()
+            self.profile?.interestsSet = Set<String>()
+            self.profile?.treatmentSet = Set<String>()
+            self.profile?.certificatesSet = Set<String>()
+            
+            
             let query = "select p.dateOfBirth, p.approval, p.bloodType, h.name, hpt.apptDate, hpt.reason, hpt.start, hpt.end, ms.id, msa.validTo, msa.authid, ha.name, a.name, i.name, t.name, cr.name, o.name, f.fLimit, hpt.id from " + userType + " c left outer join HospitalAppointment hpt on hpt.bookedBy = c.id left outer join MedicalService ms on ms.userId = c.id  left outer join MedicalService_Authorization msa on msa.service = ms.id left outer join Organ o on o.id = ms.id left outer join Fund f on f.id = ms.id left outer join Profile p on p.userId = c.id  left outer join Allergies a on a.partOf = p.id left outer join Interests i on i.partOf = p.id  left outer join Treatments t on t.partOf = p.id  left outer join Certificates cr on cr.partOf = p.id left outer join MedNetUser h on h.id = hpt.hospital left outer join MedNetUser ha on ha.id = msa.authorizedBy where c.id = ?"
             
             //var profileSet = false
@@ -110,7 +122,9 @@ class Registered: MedNetUser {
             for row in try stmt.run(self.id)
             {   //profile construction
                 if (self.profile == nil) {
+                    if (row[0] != nil) && (row[1] != nil) && (row[2] != nil) {
                     self.profile = Profile(approval: getApproval(approvalInt: row[1] as! Int64), bloodType: getBloodType(bloodTypeInt: row[2] as! Int64), dateOfBirth: row[0] as! String)
+                }
                 }
                 
                 //hospital appointment
@@ -133,13 +147,31 @@ class Registered: MedNetUser {
                     //organDonation construction
                     if(row[16] != nil) {
                         if (row[11] != nil) {
-                        self.organDonation.append(OrganDonation(authorizedBy: row[11] as! String, authId: row[10] as! String, validTo: row[9] as! String, name: row[16] as! String))
+                            let organ = row[16] as! String
+                           
+                            if organList.index(of: organ) != nil {
+                                //do nothing
+                            }
+                            else {
+                                self.organDonation.append(OrganDonation(authorizedBy: row[11] as! String, authId: row[10] as! String, validTo: row[9] as! String, name: row[16] as! String))
+                                organList.append(organ)
+                                UserProfile.sharedInstance.donations.append((String(organ), "organ"))
+                            }
                     }
                     }
                     //fundDonation construction
                     if (row[17] != nil) {
                         if (row[11] != nil) {
-                        self.fundDonation.append(FundDonation(authorizedBy: row[11] as! String, authId: row[10] as! String, validTo: row[9] as! String, fundLimit: row[17] as! Int64))
+                            let fl = row[17] as! Double
+                            
+                            if fundList.index(of: fl) != nil {
+                                //do nothing
+                            }
+                            else {
+                        self.fundDonation.append(FundDonation(authorizedBy: row[11] as! String, authId: row[10] as! String, validTo: row[9] as! String, fundLimit: row[17] as! Double))
+                                fundList.append(fl)
+                                UserProfile.sharedInstance.donations.append((String(fl), "fund"))
+                            }
                     }
                     }
                 }
@@ -161,8 +193,8 @@ class Registered: MedNetUser {
                     self.profile?.certificatesSet.insert(row[15] as! String)
                 }
             }
-            
-            print("Read from data base")
+                
+            print("Successfully read user data from database")
             
         }
         catch
@@ -195,7 +227,7 @@ class Registered: MedNetUser {
         case 4: return "O-"
         default: return "A+"
         }
-    }//end of fetchProfileHospitalAppointmentAndDonations
+    }
     
     func insertCertificates(certificates: [String]) {
         let DB = self.dbInstance.DB
@@ -238,7 +270,11 @@ class Registered: MedNetUser {
             var query = "insert into MedicalRequest (status, requestType, reason, placedBy) Values(?, ?, ?, ?)"
             var stmt = try DB?.prepare(query)
             let id = Int64(self.id!)
-            try stmt?.run(Int64(1), Int64(2), reason, id)
+            try stmt?.run(Int64(2), Int64(2), reason, id)
+            
+            let medicalRequest = MedicalRequest(requestId: (DB?.lastInsertRowid)!, reason: reason, requestType: "Manual", status: "Pending")
+            UserProfile.sharedInstance.placedMedicalRequests.append(medicalRequest)
+
             
             query = "insert into MedicalRequest_MedNetUser (placedTo, have) select id, ? from MedNetUser where name = ?"
             stmt = try DB?.prepare(query)
@@ -253,20 +289,16 @@ class Registered: MedNetUser {
         
     }
     
-    //todo:
-    func getAllHospitalNameFromDb() {
-        
-    }
     
-    func searchProfiles(searchText: String) -> [String] {
-        var searchedResultNames: [String] = []
+    func searchProfiles(searchText: String) -> [(String, Int64)] {
+        var searchedResultNames: [(String, Int64)] = []
         let DB = self.dbInstance.DB!
         do {
-            //insert into MedicalRequests
-            let query = "select m.name as Name from MedNetUser m, Registered r where m.name like ? and m.id = r.id"
+            //search profiles
+            let query = "select m.name, r.userType as Name from MedNetUser m, Registered r where m.name like ? and m.id = r.id"
             let stmt = try DB.prepare(query)
             for row in try stmt.run(searchText + "%") {
-                searchedResultNames.append(row[0] as! String)
+                searchedResultNames.append((row[0] as! String, row[1] as! Int64))
             }
         }
         catch {

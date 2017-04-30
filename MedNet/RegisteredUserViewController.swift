@@ -32,6 +32,7 @@ class RegisteredUserViewController: MasterViewController {
         
         if (validated) {
             UserProfile.sharedInstance.userType = userType
+            UserProfile.sharedInstance.userName = userNameTextField.text
         switch(userType) {
         case "Civilian": Civilian.sharedInstance.getCivilianFromDb(userName: userNameTextField.text!)
             navigateToHomePage()
@@ -57,18 +58,26 @@ class RegisteredUserViewController: MasterViewController {
     var MedNetUserId: Int64?
     func validateUserInput() -> Bool {
         do {
+            userType = "not found"
             if (userNameTextField.text! != "") {
                 print("trying to fetch from db")
             userType = try Registered.getUserTypeFromDb(userName: userNameTextField.text!)
+                print ("userType", userType)
+                if userType == "" {
+                    errorText.text = "No such user name found."
+                    return false
+                }
             }
         }
         catch {
-            print("Failed to get userName")
+            errorText.text = "No such user name found."
+            print("No such username found in database")
+            return false
         }
         
         print("userType:", userType)
         
-        if (userType == "") {
+        if (userType == "not found") {
             errorText.text = "No such user name found."
             return false
         }

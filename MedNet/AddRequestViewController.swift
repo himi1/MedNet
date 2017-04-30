@@ -22,9 +22,9 @@ class AddRequestViewController: MasterViewController {
         super.viewDidLoad()
         
         errorText.isHidden = true
-            requestTextField.text = requestCurrentValue
+        requestTextField.text = requestCurrentValue
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -42,7 +42,25 @@ class AddRequestViewController: MasterViewController {
             
             switch(UserProfile.sharedInstance.userType) {
             case "Civilian": Civilian.sharedInstance.insertMedicalRequests(reason: requestTextField.text!, name: nameTextField.text!)
+            
+            do {
+                try Civilian.sharedInstance.fetchProfileHospitalAppointmentAndDonations(userType: "Civilian")
+            }
+            catch {
+                print("unable to update medical appointment and donations from user")
+                }
+                
+                
             case "Doctor": Doctor.sharedInstance.insertMedicalRequests(reason: requestTextField.text!, name: nameTextField.text!)
+            
+            do {
+                try Civilian.sharedInstance.fetchProfileHospitalAppointmentAndDonations(userType: "Doctor")
+            }
+            catch {
+                print("unable to update medical appointment and donations from user")
+            }
+            
+            print("successfully added medical requests")
             default: print("user not of type Civilian or doctor")
             }
             
@@ -67,15 +85,15 @@ class AddRequestViewController: MasterViewController {
         //if it reaches here, means validation successful
         return true
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

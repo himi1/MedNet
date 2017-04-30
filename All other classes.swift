@@ -122,8 +122,8 @@ class SpecialService : MedicalService {
 }
 
 class FundDonation: Donation {
-    var fundLimit: Int64?
-    init(authorizedBy: String, authId: String, validTo: String, fundLimit: Int64) {
+    var fundLimit: Double?
+    init(authorizedBy: String, authId: String, validTo: String, fundLimit: Double) {
         super.init(authorizedBy: authorizedBy, authId: authId, validTo: validTo)
         self.fundLimit = fundLimit
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class SearchTextField: JVFloatLabeledTextField {
+open class SearchTextField: UITextField {
     
     ////////////////////////////////////////////////////////////////////////
     // Public interface

@@ -22,7 +22,6 @@ class MedicalRequestViewController: MasterViewController, UITableViewDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //show or hide tableView based on medical requests
         self.configureTableView()
     }
     
@@ -66,7 +65,7 @@ class MedicalRequestViewController: MasterViewController, UITableViewDelegate, U
             cell = TDBadgedCell(style: .default, reuseIdentifier: cellIdentifier);
         }
         
-        let (badgeColor, badgeString) = getBadgeConfigurations(status: (medicalRequest?.status!)!)
+        let (badgeColor, badgeString) = getBadgeConfigurations(status: (medicalRequest.status!))
         cell?.badgeString = badgeString
         cell?.badgeColor = badgeColor
         //cell?.badgeColorHighlighted = .green
@@ -74,7 +73,7 @@ class MedicalRequestViewController: MasterViewController, UITableViewDelegate, U
         cell?.badgeFontSize = 18
         cell?.badgeRadius = 20
         
-        cell?.textLabel?.text = medicalRequest?.reason
+        cell?.textLabel?.text = medicalRequest.reason
         //cell?.detailTextLabel?.text = "Request type: " + medicalRequest?.requestType!
         
         // Returning the cell
@@ -87,11 +86,12 @@ class MedicalRequestViewController: MasterViewController, UITableViewDelegate, U
     
     func getBadgeConfigurations(status: Status) -> (color: UIColor, string: String) {
         switch(status.rawValue) {
-        case "Canceled": return (.green, "Cancelled")
+        case "Canceled": return (.red, "Cancelled")
         case "Pending": return (.orange, "Pending")
-        case "Completed": return (.orange, "Completed")
-        case "Denied": return (.orange, "Denied")
+        case "Completed": return (.green, "Completed")
+        case "Denied": return (.red, "Denied")
         default: return (.red, "Denied")
+
         }
     }
     
@@ -115,7 +115,7 @@ class MedicalRequestViewController: MasterViewController, UITableViewDelegate, U
         
         let editAction = UITableViewRowAction(style: .normal, title: "Edit") {action in
             //handle edit
-            self.editRequestString = (UserProfile.sharedInstance.placedMedicalRequests[indexPath.row]?.reason!)!
+            self.editRequestString = (UserProfile.sharedInstance.placedMedicalRequests[indexPath.row].reason!)
             
             UserProfile.sharedInstance.placedMedicalRequests.remove(at: indexPath.row)
             

@@ -12,7 +12,7 @@ class Civilian : Registered {
     var cUID: String?
     var cUIDType: CUIDType?
     
-    static let sharedInstance = Civilian()
+    static var sharedInstance = Civilian()
     
     func getCivilianFromDb(userName: String) {
         //fetch from Resistered table

@@ -126,7 +126,9 @@ class AddCertificatesViewController: MasterViewController, UITableViewDelegate, 
             
             
             //go to next page
+            Civilian.sharedInstance.getCivilianFromDb(userName: UserProfile.sharedInstance.userName!)
             navigateToHomePage()
+            
         }
         else {
             errorText.isHidden = false

@@ -13,7 +13,7 @@ class Doctor : Registered {
     var degrees = Set<String>()
     var hospitals = Set<String>()
     
-    static let sharedInstance = Doctor()
+    static var sharedInstance = Doctor()
     
     func getDoctorFromDb(userName: String) {
         //fetch from Resistered table
