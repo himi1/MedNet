@@ -10,15 +10,15 @@ insert into Status(status) VALUES('Pending');
 insert into Status(status) VALUES('Denied');
 insert into Status(status) VALUES('Completed');
 
-create table UserType (
-	id INTEGER primary key autoincrement,
-	userType varchar(50) not null
-);
+	create table UserType (
+		id INTEGER primary key autoincrement,
+		userType varchar(50) not null
+	);
 
-insert into UserType(userType) VALUES('Civilian');
-insert into UserType(userType) VALUES('Doctor');
-insert into UserType(userType) VALUES('VolunteerOrganization');
-insert into UserType(userType) VALUES('Hospital');
+	insert into UserType(userType) VALUES('Civilian');
+	insert into UserType(userType) VALUES('Doctor');
+	insert into UserType(userType) VALUES('VolunteerOrganization');
+	insert into UserType(userType) VALUES('Hospital');
 
 -- Enumeration Strategy: Enumeration Table
 create table RequestType (
@@ -32,9 +32,9 @@ create table MedicalServiceType (
 	id INTEGER primary key autoincrement,
 	serviceType varchar(50) not null
 );
-insert into MedicalServiceType(requestType) VALUES('Fund Donation');
-insert into MedicalServiceType(requestType) VALUES('Organ Donation');
-insert into MedicalServiceType(requestType) VALUES('Special');
+insert into RequestType(requestType) VALUES('Fund Donation');
+insert into RequestType(requestType) VALUES('Organ Donation');
+insert into RequestType(requestType) VALUES('Special');
 
 -- Enumeration Strategy: Enumeration Table
 create table CUIDType (
