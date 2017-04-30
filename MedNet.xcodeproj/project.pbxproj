@@ -47,7 +47,6 @@
 		7EA7AEBE1E8F625900213ACE /* Civilian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA7AEBD1E8F625900213ACE /* Civilian.swift */; };
 		7EA8F7A71EB3085A00F79B81 /* DonationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8F7A61EB3085A00F79B81 /* DonationsViewController.swift */; };
 		7EA8F7B11EB35AC600F79B81 /* MedicalRequestFullViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8F7B01EB35AC600F79B81 /* MedicalRequestFullViewController.swift */; };
-		7EA8F7B41EB35CCE00F79B81 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8F7B31EB35CCE00F79B81 /* HMSegmentedControl.m */; };
 		7EA8F7B61EB3666E00F79B81 /* RecievedMedicalRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8F7B51EB3666E00F79B81 /* RecievedMedicalRequestsViewController.swift */; };
 		7EA8F7BA1EB36AEF00F79B81 /* SJFluidSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8F7B71EB36AEF00F79B81 /* SJFluidSegmentedControl.swift */; };
 		7EA8F7BB1EB36AEF00F79B81 /* SJGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8F7B81EB36AEF00F79B81 /* SJGradientView.swift */; };
@@ -201,8 +200,6 @@
 		7EA7AEBD1E8F625900213ACE /* Civilian.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Civilian.swift; sourceTree = "<group>"; };
 		7EA8F7A61EB3085A00F79B81 /* DonationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DonationsViewController.swift; sourceTree = "<group>"; };
 		7EA8F7B01EB35AC600F79B81 /* MedicalRequestFullViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalRequestFullViewController.swift; sourceTree = "<group>"; };
-		7EA8F7B21EB35CCE00F79B81 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
-		7EA8F7B31EB35CCE00F79B81 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		7EA8F7B51EB3666E00F79B81 /* RecievedMedicalRequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecievedMedicalRequestsViewController.swift; sourceTree = "<group>"; };
 		7EA8F7B71EB36AEF00F79B81 /* SJFluidSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SJFluidSegmentedControl.swift; sourceTree = "<group>"; };
 		7EA8F7B81EB36AEF00F79B81 /* SJGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SJGradientView.swift; sourceTree = "<group>"; };
@@ -352,8 +349,6 @@
 				7EA8F7B91EB36AEF00F79B81 /* UIView+Constraints.swift */,
 				7E81D4531E8AEC4200C32FF8 /* CoreActionSheetPicker.h */,
 				7E3D00271E8877EF004DC071 /* DatePickerDialog.swift */,
-				7EA8F7B21EB35CCE00F79B81 /* HMSegmentedControl.h */,
-				7EA8F7B31EB35CCE00F79B81 /* HMSegmentedControl.m */,
 				7E81D4671E8AFA0E00C32FF8 /* IQDropDownTextField.h */,
 				7E81D4681E8AFA0E00C32FF8 /* IQDropDownTextField.m */,
 				7E81D44A1E8ABE6300C32FF8 /* JVFloatLabeledTextField.h */,
@@ -788,7 +783,6 @@
 				7E5B0FBC1E88D4E300B6FD58 /* AddTreatmentsViewController.swift in Sources */,
 				7E5B0FC21E8A4D3E00B6FD58 /* TDBadgedCell.swift in Sources */,
 				7EA7AEB81E8F322100213ACE /* MedNetUser.swift in Sources */,
-				7EA8F7B41EB35CCE00F79B81 /* HMSegmentedControl.m in Sources */,
 				7E9094D41E91D52A006B7D1C /* SearchUsersViewController.swift in Sources */,
 				7E6FD10A1E8B29A900E565B1 /* OrganizationMedicalRequestViewController.swift in Sources */,
 				7E9214DF1E91FA6A00B28CB9 /* SQLiteDataStore.swift in Sources */,

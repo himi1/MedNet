@@ -11,7 +11,6 @@
 
 #import "JVFloatLabeledTextField.h"
 #import "IQDropDownTextField.h"
-#import "HMSegmentedControl.h"
 
 #endif /* Bridging_Header_h */
 
