@@ -147,11 +147,9 @@ class HospitalAppointmentViewController: MasterViewController, UITableViewDelega
         navigate(segue: "segueFromHospitalAppointmentToAddAppointmentViewController")
     }
     
-    //to transfer data for edit action to Add request page
+    //to transfer data for edit action to Add page
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("editRequestString1", self.editRequestString)
-        if let addRequestVC = segue.destination as? AddRequestViewController {
-            print("editRequestString3", self.editRequestString)
+            if let addRequestVC = segue.destination as? AddRequestViewController {
             addRequestVC.requestCurrentValue = self.editRequestString
             editRequestString = ""
         }

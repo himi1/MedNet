@@ -129,11 +129,9 @@ class DonationsViewController: MasterViewController, UITableViewDelegate, UITabl
         navigate(segue: "segueFromdonationsToAddAppointmentViewController")
     }
     
-    //to transfer data for edit action to Add request page
+    //to transfer data for edit action to Add page
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("editRequestString1", self.editRequestString)
         if let addRequestVC = segue.destination as? AddRequestViewController {
-            print("editRequestString3", self.editRequestString)
             addRequestVC.requestCurrentValue = self.editRequestString
             editRequestString = ""
         }

@@ -301,6 +301,7 @@
 			children = (
 				7EA8F7B51EB3666E00F79B81 /* RecievedMedicalRequestsViewController.swift */,
 				7EA8F7B01EB35AC600F79B81 /* MedicalRequestFullViewController.swift */,
+				7E5EEA761EB2CAAD00F6CD9E /* SettingsViewController.swift */,
 				7EA8F7A61EB3085A00F79B81 /* DonationsViewController.swift */,
 				7E3D00311E88969C004DC071 /* AddAllergiesViewController.swift */,
 				7E4500C91E91B3D5004E89D1 /* AddAppointmentViewController.swift */,
@@ -324,13 +325,6 @@
 				7E9094D31E91D52A006B7D1C /* SearchUsersViewController.swift */,
 			);
 			name = "View controllers";
-			sourceTree = "<group>";
-		};
-		7E5B0FCE1E8AA4AE00B6FD58 /* Data Classes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Data Classes";
 			sourceTree = "<group>";
 		};
 		7E5B0FCF1E8AA4C000B6FD58 /* Utilities */ = {
@@ -395,11 +389,9 @@
 				7EC8BEE01E8705BE008915D2 /* Info.plist */,
 				7EC8BEDD1E8705BE008915D2 /* LaunchScreen.storyboard */,
 				7EC8BED81E8705BE008915D2 /* Main.storyboard */,
-				7E5EEA761EB2CAAD00F6CD9E /* SettingsViewController.swift */,
 				7EC8BEDB1E8705BE008915D2 /* Assets.xcassets */,
 				7E5B0FD01E8AA4EC00B6FD58 /* Supporting files */,
 				7E5B0FCF1E8AA4C000B6FD58 /* Utilities */,
-				7E5B0FCE1E8AA4AE00B6FD58 /* Data Classes */,
 				7E5B0FCD1E8AA4A000B6FD58 /* View controllers */,
 				7E81D4521E8AC58100C32FF8 /* Bridging-Header.h */,
 			);

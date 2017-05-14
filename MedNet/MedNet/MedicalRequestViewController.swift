@@ -137,9 +137,7 @@ class MedicalRequestViewController: MasterViewController, UITableViewDelegate, U
     
     //to transfer data for edit action to Add request page
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("editRequestString1", self.editRequestString)
         if let addRequestVC = segue.destination as? AddRequestViewController {
-            print("editRequestString3", self.editRequestString)
             addRequestVC.requestCurrentValue = self.editRequestString
             editRequestString = ""
         }
