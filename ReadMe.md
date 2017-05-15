@@ -2,10 +2,12 @@
 
 MedNet – A social media for medical help aims to provide a centralized location to connect with people based on your medical interests and needs. You can build authorized medical profile, and upload your medical documents to access them from anywhere.
 
-## App demo video
+## App demo and report
 
 Please see [demo video](https://github.com/himi1/MedNet/blob/master/App%20Demo.mov) for a little demo of things I implemented using SQLite database with swift.
+
 Here is the [report](https://github.com/himi1/MedNet/blob/master/MedNet_ProjectReport.docx) of the project.
+
 Please view the [powerpoint presentation](https://github.com/himi1/MedNet/blob/master/MedNet.pptx) created to explain the need and application of MedNet
 
 ## Database
