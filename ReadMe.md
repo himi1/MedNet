@@ -13,17 +13,20 @@ Please view the [powerpoint presentation](https://github.com/himi1/MedNet/blob/m
 ## Database
 
 Database used: SQLite
+
 Database create script: CreateScript.sql
+
 DataBase: /MedNet/MedNet.db
+
 DataModel Classes:
-    /MedNet/MedNetUser.swift
-    /MedNet/Registered.swift
-    /MedNet/Civilian.swift
-    /MedNet/Doctor.swift
-    /MedNet/VolunteerOrganization.swift
-    /MedNet/Hospital.swift
-    /MedNet/All other classes.swift
-    /MedNet/SQLLiteDataStore.swift
+  - /MedNet/MedNetUser.swift
+  - /MedNet/Registered.swift
+  - /MedNet/Civilian.swift
+  - /MedNet/Doctor.swift
+  - /MedNet/VolunteerOrganization.swift
+  - /MedNet/Hospital.swift
+  - /MedNet/All other classes.swift
+  - /MedNet/SQLLiteDataStore.swift
 
 ## To run
 
@@ -32,10 +35,10 @@ downloaded through the App store on MacOS
 1. open file /MedNet/SQLLiteDataStore.swift and change the value of
 dbPath variable to the location of MedNet.db in your system
 For example:
-In my system, the location of db is:
-"/Users/himanshibhardwaj/IdeaProjects/MedNet/MedNet/MedNet.db"
-So I on line 32 of /MedNet/SQLLiteDataStore.swift:
-I have set the dbPath = "/Users/himanshibhardwaj/IdeaProjects/MedNet/MedNet/MedNet.db"
+In my system, the location of db is ```/Users/himanshibhardwaj/IdeaProjects/MedNet/MedNet/MedNet.db```
+
+So on line 32 of /MedNet/SQLLiteDataStore.swift:
+I have set ```dbPath = "/Users/himanshibhardwaj/IdeaProjects/MedNet/MedNet/MedNet.db"```
 2. Open /MedNet/MedNet.xcodeproj
 3. Set the active scheme to iPhone6s
 4. command + R
