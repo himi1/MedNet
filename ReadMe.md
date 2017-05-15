@@ -1,12 +1,12 @@
 # MedNet
 
-MedNet – A social media for medical help aims to provide a centralized location to connect with people based on your medical interests and needs. You can build authorized medical profile, and upload your medical documents to access them from anywhere.
+MedNet – A social media for medical help aims to provide a centralized location to connect with people based on your medical interests and needs. You can build authorized medical profile, and upload your medical documents to access them from anywhere
 
 ## App demo and report
 
-Please see [demo video](https://github.com/himi1/MedNet/blob/master/App%20Demo.mov) for a little demo of things I implemented using SQLite database with swift.
+Please see this [demo video](https://github.com/himi1/MedNet/blob/master/App%20Demo.mov) for a little demo of things I implemented using SQLite database with swift
 
-Here is the [report](https://github.com/himi1/MedNet/blob/master/MedNet_ProjectReport.docx) of the project.
+Here is the [report](https://github.com/himi1/MedNet/blob/master/MedNet_ProjectReport.docx) of the project
 
 Please view the [powerpoint presentation](https://github.com/himi1/MedNet/blob/master/MedNet.pptx) created to explain the need and application of MedNet
 
@@ -28,7 +28,7 @@ DataModel Classes:
 ## To run
 
 0. iOS projects run on Xcode(A software only available on MacOS). It can be
-downloaded through the App store on MacOS.
+downloaded through the App store on MacOS
 1. open file /MedNet/SQLLiteDataStore.swift and change the value of
 dbPath variable to the location of MedNet.db in your system
 For example:
