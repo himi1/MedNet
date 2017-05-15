@@ -4,21 +4,16 @@ MedNet – A social media for medical help aims to provide a centralized locatio
 
 ## App demo and report
 
-Please see this [demo video](https://github.com/himi1/MedNet/blob/master/App%20Demo.mov) for a little demo of things I implemented using SQLite database with swift
-
-Here is the [report](https://github.com/himi1/MedNet/blob/master/MedNet_ProjectReport.docx) of the project
-
-Please view the [powerpoint presentation](https://github.com/himi1/MedNet/blob/master/MedNet.pptx) created to explain the need and application of MedNet
+- Please see this [demo video](https://github.com/himi1/MedNet/blob/master/App%20Demo.mov) for a little demo of things I implemented using SQLite database with swift
+- Here is the [report](https://github.com/himi1/MedNet/blob/master/MedNet_ProjectReport.docx) of the project
+- Please view the [powerpoint presentation](https://github.com/himi1/MedNet/blob/master/MedNet.pptx) created to explain the need and application of MedNet
 
 ## Database
 
-Database used: SQLite
-
-Database create script: CreateScript.sql
-
-DataBase: /MedNet/MedNet.db
-
-DataModel Classes:
+- Database used: SQLite
+- Database create script: CreateScript.sql
+- DataBase: /MedNet/MedNet.db
+- DataModel Classes:
   - /MedNet/MedNetUser.swift
   - /MedNet/Registered.swift
   - /MedNet/Civilian.swift
@@ -33,11 +28,8 @@ DataModel Classes:
 0. iOS projects run on Xcode(A software only available on MacOS). It can be
 downloaded through the App store on MacOS
 1. open file /MedNet/SQLLiteDataStore.swift and change the value of
-dbPath variable to the location of MedNet.db in your system
-For example:
-In my system, the location of db is ```/Users/himanshibhardwaj/IdeaProjects/MedNet/MedNet/MedNet.db```
-
-So on line 32 of /MedNet/SQLLiteDataStore.swift:
+dbPath variable to the location of MedNet.db in your system. For instance, in my system, the location of db is ```/Users/himanshibhardwaj/IdeaProjects/MedNet/MedNet/MedNet.db```
+So on line 32 of ```/MedNet/SQLLiteDataStore.swift```
 I have set ```dbPath = "/Users/himanshibhardwaj/IdeaProjects/MedNet/MedNet/MedNet.db"```
 2. Open /MedNet/MedNet.xcodeproj
 3. Set the active scheme to iPhone6s
